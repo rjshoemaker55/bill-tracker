@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const graphqlHTTP = require('express-graphql');
+const schema = require('./schema/schema');
 
 const app = express();
 const port = 5000;
@@ -14,6 +15,12 @@ mongoose.connection.once('open', () => {
   console.log('Connected to Mongo database.');
 });
 
-app.get('/', (req, res) => res.send('Hello world'));
+app.use(
+  '/graphql',
+  graphqlHTTP({
+    schema,
+    graphiql: true
+  })
+);
 
 app.listen(port, () => console.log(`App listening on port ${port}`));

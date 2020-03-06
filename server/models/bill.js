@@ -9,4 +9,4 @@ const billSchema = new Schema({
   category: String
 });
 
-mondule.exports = mongoose.model('Bill', billSchema);
+module.exports = mongoose.model('Bill', billSchema);

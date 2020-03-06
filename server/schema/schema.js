@@ -35,7 +35,13 @@ const UserType = new GraphQLObjectType({
   fields: () => ({
     id: { type: GraphQLID },
     name: { type: GraphQLString },
-    password: { type: GraphQLString } // TODO: encrypted password?
+    password: { type: GraphQLString }, // TODO: encrypted password?\
+    bills: {
+      type: GraphQLList(BillType),
+      resolve(parent, args) {
+        return Bill.find({ userId: parent.id });
+      }
+    }
   })
 });
 
@@ -53,7 +59,7 @@ const RootQuery = new GraphQLObjectType({
     },
     user: {
       type: UserType,
-      args: { id: { type: GraphQL } },
+      args: { id: { type: GraphQLID } },
       resolve(parent, args) {
         return User.findById(args.id);
       }
@@ -109,7 +115,7 @@ const Mutation = new GraphQLObjectType({
           username: args.username,
           password: args.password
         });
-        user.save();
+        return user.save();
       }
     }
   }
