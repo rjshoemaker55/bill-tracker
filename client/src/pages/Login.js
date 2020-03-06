@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import { loginMutation, registerMutation } from '../queries/queries'
 import { AUTH_TOKEN } from '../constants';
 
 const Login = () => {
@@ -7,6 +8,8 @@ const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
+
+  const SIGNUP_MUTATION = 
 
   const _confirm = async () => {};
 
