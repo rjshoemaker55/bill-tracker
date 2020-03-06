@@ -8,6 +8,12 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
 
+  const _confirm = async () => {};
+
+  const _saveUserData = token => {
+    localStorage.setItem(AUTH_TOKEN, token);
+  };
+
   return (
     <div>
       <h4 className='login-header'>{login ? 'Login' : 'Register'}</h4>
@@ -31,20 +37,12 @@ const Login = () => {
         type='password'
         placeholder='Password'
       />
-      <button className='confirm-button' onClick={() => this._confirm}>
-        {login ? 'Login' : 'Register'}
-      </button>
-      <div className='switch-button' onClick={setLogin(!login)}>
+      <button className='confirm-button'>{login ? 'Login' : 'Register'}</button>
+      <div className='switch-button' onClick={() => setLogin(!login)}>
         {login ? 'I need to create an account.' : 'I already have an account.'}
       </div>
     </div>
   );
-
-  _confirm = async () => {};
-
-  _saveUserData = token => {
-    localStorage.setItem(AUTH_TOKEN, token);
-  };
 };
 
 export default Login;
