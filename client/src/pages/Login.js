@@ -9,8 +9,6 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
 
-  const SIGNUP_MUTATION = 
-
   const _confirm = async () => {};
 
   const _saveUserData = token => {

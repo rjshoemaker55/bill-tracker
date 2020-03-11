@@ -46,6 +46,14 @@ const UserType = new GraphQLObjectType({
   })
 });
 
+const CategoryType = new GraphQLObjectType({
+  name: 'Category',
+  fields: () => ({
+    id: { type: GraphQLId },
+    name: { type: GraphQLString }
+  })
+});
+
 // TODO: Add category type
 
 const RootQuery = new GraphQLObjectType({
