@@ -38,18 +38,22 @@ const BillType = new GraphQLObjectType({
 });
 
 const UserType = new GraphQLObjectType({
-  id: { type: GraphQLInt },
-  uname: { type: GraphQLString },
-  username: { type: GraphQLString },
-  upassword: { type: GraphQLString },
-  bills: {
-    type: GraphQLList(BillType),
-    resolve(parent, args) {
-      return client
-        .query(`SELECT * FROM bills WHERE user_id = ${parent.id}`)
-        .then(res => res.rows);
+  name: 'User',
+  fields: () => ({
+    id: { type: GraphQLInt },
+    uname: { type: GraphQLString },
+    username: { type: GraphQLString },
+    upassword: { type: GraphQLString },
+    bills: {
+      type: GraphQLList(BillType),
+      resolve(parent, args) {
+        return client
+          .query(`SELECT * FROM bills WHERE user_id = ${parent.id}`)
+          .then(res => res.rows)
+          .catch(err => console.log(err));
+      }
     }
-  }
+  })
 });
 
 // Declaring GraphQL root query
@@ -59,12 +63,20 @@ const RootQuery = new GraphQLObjectType({
     bills: {
       type: GraphQLList(BillType),
       resolve(parent, args) {
-        return client.query(`SELECT * FROM bills;`).then(res => res.rows);
+        return client
+          .query(`SELECT * FROM bills;`)
+          .then(res => res.rows)
+          .catch(err => console.log(err));
       }
     },
     users: {
       type: GraphQLList(UserType),
-      resolve(parent, args) {}
+      resolve(parent, args) {
+        return client
+          .query(`SELECT * FROM users;`)
+          .then(res => res.rows)
+          .catch(err => console.log(err));
+      }
     }
   }
 });
