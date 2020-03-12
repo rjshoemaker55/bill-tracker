@@ -99,20 +99,22 @@ const Mutation = new GraphQLObjectType({
         billname: { type: new GraphQLNonNull(GraphQLString) },
         amount: { type: new GraphQLNonNull(GraphQLInt) },
         duedate: { type: new GraphQLNonNull(GraphQLInt) },
-        category: { type: GraphQLString }
+        category: { type: GraphQLString },
+        user: { type: new GraphQLNonNull(GraphQLInt) }
       },
       async resolve(parent, args) {
-        const { billname, amount, duedate, category } = args;
+        const { billname, amount, duedate, category, user } = args;
 
-        const results = await client.query(
-          `
-          INSERT INTO bills (billname, amount, duedate, category)
-          VALUES ('${billname}', '${amount}', '${duedate}', '${category}')
-          RETURNING id, billname, amount, duedate, category;
-        `
-        );
-
-        return results.rows[0];
+        return client
+          .query(
+            `
+              INSERT INTO bills (billname, amount, duedate, category, user_id)
+              VALUES ('${billname}', '${amount}', '${duedate}', '${category}', '${user}')
+              RETURNING id, billname, amount, duedate, category, user_id;
+            `
+          )
+          .then(res => res.rows[0])
+          .catch(err => console.log(err));
       }
     }
   }
