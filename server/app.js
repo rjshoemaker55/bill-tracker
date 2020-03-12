@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const graphqlHTTP = require('express-graphql');
 const schema = require('./schema/schema');
+const pgSchema = require('./schema/pgSchema.js');
 const { Client } = require('pg');
 
 const app = express();
@@ -16,25 +17,14 @@ const port = 5000;
 //   console.log('Connected to Mongo database.');
 // });
 
-export const client = new Client({
-  user: 'postgres',
-  password: 'postgres',
-  host: 'localhost',
-  port: 5432,
-  database: 'bill-tracker'
-});
-
-client
-  .connect()
-  .then(() => console.log('Connected to Postgres database.'))
-  .catch(err => console.log(`Error: ${err}`));
-
 app.use(
   '/graphql',
   graphqlHTTP({
-    schema,
+    schema: pgSchema,
     graphiql: true
   })
 );
 
 app.listen(port, () => console.log(`App listening on port ${port}`));
+
+// module.exports = client;
