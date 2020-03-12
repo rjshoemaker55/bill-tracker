@@ -33,7 +33,16 @@ const BillType = new GraphQLObjectType({
     billname: { type: GraphQLString },
     amount: { type: GraphQLInt },
     duedate: { type: GraphQLInt },
-    category: { type: GraphQLString }
+    category: { type: GraphQLString },
+    user: {
+      type: UserType,
+      resolve(parent, args) {
+        return client
+          .query(`SELECT * FROM users WHERE id = ${parent.user_id}`)
+          .then(res => res.rows[0])
+          .catch(err => console.log(err));
+      }
+    }
   })
 });
 
