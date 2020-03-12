@@ -1,19 +1,19 @@
+CREATE TABLE users
+(
+  id SERIAL PRIMARY KEY,
+  uname VARCHAR(50) NOT NULL,
+  username VARCHAR(50) NOT NULL,
+  upassword VARCHAR(50) NOT NULL
+);
+
 CREATE TABLE bills
 (
-  id SERIAL NOT NULL PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   billname VARCHAR(50) NOT NULL,
   amount INT NOT NULL,
   duedate INT NOT NULL,
   category VARCHAR(50),
-  user_id BIGINT
-);
-
-CREATE TABLE users
-(
-  id SERIAL NOT NULL PRIMARY KEY,
-  uname VARCHAR(50) NOT NULL,
-  username VARCHAR(50) NOT NULL,
-  upassword VARCHAR(50) NOT NULL,
+  user_id BIGINT REFERENCES users(id)
 );
 
 INSERT INTO users
@@ -42,7 +42,7 @@ INSERT INTO bills
 VALUES
   ('House Payment', 300, 15, 'House', 2);
 INSERT INTO bills
-  (billname, amount, duedate, category, user_id)
+  (billname, amount, duedate, user_id)
 VALUES
   ('Credit Card', 600, 5, 1);
 INSERT INTO bills

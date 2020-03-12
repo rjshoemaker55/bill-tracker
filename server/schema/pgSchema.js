@@ -44,11 +44,10 @@ const UserType = new GraphQLObjectType({
   upassword: { type: GraphQLString },
   bills: {
     type: GraphQLList(BillType),
-    async resolve(parent, args) {
-      const result = await client.query(`
-        SELECT * FROM bills WHERE user_id = ${parent.id}
-      `);
-      return result;
+    resolve(parent, args) {
+      return client
+        .query(`SELECT * FROM bills WHERE user_id = ${parent.id}`)
+        .then(res => res.rows);
     }
   }
 });
@@ -62,6 +61,10 @@ const RootQuery = new GraphQLObjectType({
       resolve(parent, args) {
         return client.query(`SELECT * FROM bills;`).then(res => res.rows);
       }
+    },
+    users: {
+      type: GraphQLList(UserType),
+      resolve(parent, args) {}
     }
   }
 });
