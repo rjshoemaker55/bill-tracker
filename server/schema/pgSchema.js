@@ -29,12 +29,28 @@ client
 const BillType = new GraphQLObjectType({
   name: 'Bill',
   fields: () => ({
-    id: { type: GraphQLID },
+    id: { type: GraphQLInt },
     billname: { type: GraphQLString },
     amount: { type: GraphQLInt },
     duedate: { type: GraphQLInt },
     category: { type: GraphQLString }
   })
+});
+
+const UserType = new GraphQLObjectType({
+  id: { type: GraphQLInt },
+  uname: { type: GraphQLString },
+  username: { type: GraphQLString },
+  upassword: { type: GraphQLString },
+  bills: {
+    type: GraphQLList(BillType),
+    async resolve(parent, args) {
+      const result = await client.query(`
+        SELECT * FROM bills WHERE user_id = ${parent.id}
+      `);
+      return result;
+    }
+  }
 });
 
 // Declaring GraphQL root query
