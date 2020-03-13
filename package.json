@@ -6,6 +6,7 @@
   "author": "rjshoemaker55 <rjshoemaker55@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "server": "cd server && nodemon app.js"
+    "server": "cd server && nodemon app.js",
+    "client": "cd client && yarn start"
   }
 }
