@@ -90,6 +90,7 @@ const RootQuery = new GraphQLObjectType({
   }
 });
 
+// Declaring GraphQL mutations
 const Mutation = new GraphQLObjectType({
   name: 'Mutation',
   fields: {
@@ -137,6 +138,22 @@ const Mutation = new GraphQLObjectType({
           )
           .then(res => res.rows[0])
           .catch(err => console.log(err));
+      }
+    },
+    deleteBill: {
+      type: BillType,
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLInt) }
+      },
+      resolve(parent, args) {
+        return client
+          .query(
+            `
+              DELETE FROM bills WHERE id = ${args.id}
+              RETURNING id;
+            `
+          )
+          .then(res => res.rows[0]);
       }
     }
   }
