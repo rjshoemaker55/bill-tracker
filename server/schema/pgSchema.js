@@ -102,7 +102,7 @@ const Mutation = new GraphQLObjectType({
         category: { type: GraphQLString },
         user: { type: new GraphQLNonNull(GraphQLInt) }
       },
-      async resolve(parent, args) {
+      resolve(parent, args) {
         const { billname, amount, duedate, category, user } = args;
 
         return client
@@ -111,6 +111,28 @@ const Mutation = new GraphQLObjectType({
               INSERT INTO bills (billname, amount, duedate, category, user_id)
               VALUES ('${billname}', '${amount}', '${duedate}', '${category}', '${user}')
               RETURNING id, billname, amount, duedate, category, user_id;
+            `
+          )
+          .then(res => res.rows[0])
+          .catch(err => console.log(err));
+      }
+    },
+    addUser: {
+      type: UserType,
+      args: {
+        name: { type: new GraphQLNonNull(GraphQLString) },
+        username: { type: new GraphQLNonNull(GraphQLString) },
+        password: { type: new GraphQLNonNull(GraphQLString) }
+      },
+      resolve(parent, args) {
+        const { uname, username, upassword } = args;
+
+        return client
+          .query(
+            `
+              INSERT INTO users (uname, username, upassword)
+              VALUES ('${name}', '${username}', '${password}')
+              RETURNING id, uname, username
             `
           )
           .then(res => res.rows[0])
