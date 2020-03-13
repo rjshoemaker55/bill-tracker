@@ -8,7 +8,8 @@ const {
   GraphQLInt,
   GraphQLList,
   GraphQLNonNull,
-  GraphQLSchema
+  GraphQLSchema,
+  GraphQLObject
 } = graphql;
 
 // Initialize Postgres database
@@ -85,6 +86,25 @@ const RootQuery = new GraphQLObjectType({
           .query(`SELECT * FROM users;`)
           .then(res => res.rows)
           .catch(err => console.log(err));
+      }
+    },
+    loginUser: {
+      type: UserType,
+      args: {
+        username: { type: new GraphQLNonNull(GraphQLString) },
+        password: { type: new GraphQLNonNull(GraphQLString) }
+      },
+      resolve(parent, args) {
+        const { username, password } = args;
+        return client
+          .query(`SELECT * FROM users WHERE username = '${username}'`)
+          .then(res => {
+            if (res.rows[0].upassword !== password) {
+              return 'Incorrect username or password.';
+            } else {
+              return res.rows[0];
+            }
+          });
       }
     }
   }
