@@ -6,6 +6,8 @@ import { AUTH_TOKEN } from '../constants';
 const Home = props => {
   const authToken = localStorage.getItem(AUTH_TOKEN);
 
+  console.log(props.history.location.state.loginUser);
+
   return (
     <div className='home-wrapper'>
       <div className='navbar'>
@@ -14,7 +16,6 @@ const Home = props => {
             <div
               className='logout'
               onClick={() => {
-                localStorage.removeItem(AUTH_TOKEN);
                 props.history.push('/login');
               }}
             >
@@ -26,6 +27,9 @@ const Home = props => {
             </Link>
           )}
         </div>
+      </div>
+      <div className='home-content-wrapper'>
+        <ul></ul>
       </div>
     </div>
   );

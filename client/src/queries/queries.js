@@ -2,18 +2,36 @@ import { gql } from 'apollo-boost';
 
 const registerMutation = gql`
   mutation($name: String!, $username: String!, $password: String!) {
-    addUser(name: $name, username: $username, password: $password) {
-      token
+    addUser(uname: $name, username: $username, upassword: $password) {
+      uname
+      username
     }
   }
 `;
 
-const loginMutation = gql`
-  mutation($username: String!, $password: String!) {
-    login(username: $username, password: $password) {
-      token
+const loginQuery = gql`
+  query($username: String!, $password: String!) {
+    loginUser(username: $username, password: $password) {
+      username
+      uname
+      bills {
+        billname
+        amount
+        duedate
+        category
+      }
     }
   }
 `;
 
-export { registerMutation, loginMutation };
+const getUsersQuery = gql`
+  {
+    users {
+      id
+      uname
+      username
+    }
+  }
+`;
+
+export { loginQuery, registerMutation, getUsersQuery };
