@@ -12,9 +12,11 @@ const registerMutation = gql`
 const loginQuery = gql`
   query($username: String!, $password: String!) {
     loginUser(username: $username, password: $password) {
+      id
       username
       uname
       bills {
+        id
         billname
         amount
         duedate
@@ -34,4 +36,30 @@ const getUsersQuery = gql`
   }
 `;
 
-export { loginQuery, registerMutation, getUsersQuery };
+const getUsersBillsQuery = gql`
+  query($userId: Int!) {
+    getUsersBills(userId: $userId) {
+      id
+      billname
+      amount
+      duedate
+      category
+    }
+  }
+`;
+
+const deleteBillMutation = gql`
+  mutation($id: Int!) {
+    deleteBill(id: $id) {
+      id
+    }
+  }
+`;
+
+export {
+  loginQuery,
+  registerMutation,
+  getUsersQuery,
+  getUsersBillsQuery,
+  deleteBillMutation
+};

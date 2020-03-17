@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
-import { Query } from 'react-apollo';
 import { useLazyQuery } from '@apollo/react-hooks';
 
-import {
-  loginQuery,
-  // registerMutation,
-  getUsersQuery
-} from '../queries/queries';
+import { loginQuery } from '../queries/queries';
 
 const Login = props => {
   const [login, setLogin] = useState(true);
