@@ -36,14 +36,19 @@ const getUsersQuery = gql`
   }
 `;
 
-const getUsersBillsQuery = gql`
+const userQuery = gql`
   query($userId: Int!) {
-    getUsersBills(userId: $userId) {
+    user(userId: $userId) {
       id
-      billname
-      amount
-      duedate
-      category
+      uname
+      username
+      bills {
+        id
+        billname
+        amount
+        duedate
+        category
+      }
     }
   }
 `;
@@ -60,6 +65,6 @@ export {
   loginQuery,
   registerMutation,
   getUsersQuery,
-  getUsersBillsQuery,
+  userQuery,
   deleteBillMutation
 };

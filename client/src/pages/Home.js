@@ -4,39 +4,25 @@ import { useMutation, useQuery } from '@apollo/react-hooks';
 import {
   deleteBillMutation,
   getUsersBillsQuery,
-  getUsersQuery
+  getUsersQuery,
+  userQuery
 } from '../queries/queries';
 
 const Home = props => {
-  const { username, uname, id } = props.history.location.state.loginUser;
+  const { id } = props.history.location.state.loginUser;
+  const [billToDelete, setBillToDelete] = useState(null);
 
-  const [user, setUser] = useState({
-    id,
-    username,
-    uname,
-    bills: []
-  });
-
-  let { billsLoading, bills } = useQuery(getUsersBillsQuery, {
-    variables: { id: id }
-  });
-
-  setUser({
-    ...user,
-    bills
-  });
-
-  console.log(user);
-
-  let billToDelete;
-
-  const setBillToDelete = bill => (billToDelete = bill);
-
-  const [deleteBill, { data, loading }] = useMutation(deleteBillMutation, {
+  const { data, loading } = useQuery(userQuery, {
     variables: {
-      id: billToDelete
-    },
-    refetchQueries: getUsersBillsQuery
+      userId: id
+    }
+  });
+
+  const user = !loading && data.user;
+  const bills = !loading && data.user.bills;
+
+  const [deleteBill] = useMutation(deleteBillMutation, {
+    refetchQueries: [{ query: userQuery, variables: { id: id } }]
   });
 
   return (
@@ -45,7 +31,7 @@ const Home = props => {
         <Link to='/' className='logout-button'>
           Logout
         </Link>
-        <div className='logged-in-display'>{uname}</div>
+        <div className='logged-in-display'>{user.uname}</div>
       </div>
       <div className='home-content-wrapper'>
         <table>
@@ -59,8 +45,8 @@ const Home = props => {
             </tr>
           </thead>
           <tbody>
-            {!billsLoading &&
-              user.bills.map(bill => (
+            {!loading &&
+              bills.map(bill => (
                 <tr key={bill.id}>
                   <td>{bill.billname}</td>
                   <td>{bill.category ? `${bill.category}` : 'None'}</td>
@@ -77,9 +63,11 @@ const Home = props => {
                   </td>
                   <td>
                     <button
-                      onClick={async () => {
-                        await setBillToDelete(bill.id);
-                        deleteBill({ variables: { id: billToDelete } });
+                      onClick={() => {
+                        console.log(
+                          'Delete button clicked for bill with id ' + bill.id
+                        );
+                        deleteBill({ variables: { id: bill.id } });
                       }}
                     >
                       X

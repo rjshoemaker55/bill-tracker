@@ -88,16 +88,16 @@ const RootQuery = new GraphQLObjectType({
           .catch(err => console.log(err));
       }
     },
-    getUsersBills: {
-      type: GraphQLList(BillType),
+    user: {
+      type: UserType,
       args: {
         userId: { type: new GraphQLNonNull(GraphQLInt) }
       },
       resolve(parent, args) {
         return client
-          .query(`SELECT * FROM bills WHERE user_id=${args.userId}`)
+          .query(`SELECT * FROM users WHERE id=${args.userId}`)
           .then(res => {
-            return res.rows;
+            return res.rows[0];
           });
       }
     },
