@@ -1,31 +1,37 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/react-hooks';
-import {
-  deleteBillMutation,
-  getUsersBillsQuery,
-  getUsersQuery,
-  userQuery
-} from '../queries/queries';
+import { deleteBillMutation, userQuery } from '../queries/queries';
 
 const Home = props => {
-  const { id } = props.history.location.state.loginUser;
-  const [billToDelete, setBillToDelete] = useState(null);
+  const [user, setUser] = useState({});
+  const [bills, setBills] = useState([]);
 
-  const { data, loading } = useQuery(userQuery, {
+  const { id } = props.history.location.state.loginUser;
+
+  const { loading } = useQuery(userQuery, {
     variables: {
       userId: id
+    },
+    onCompleted: data => {
+      setUser(data.user);
+      setBills(data.user.bills);
     }
   });
 
-  const user = !loading && data.user;
-  const bills = !loading && data.user.bills;
+  // const user = !loading && data.user;
+  // const bills = !loading && data.user.bills;
 
   const [deleteBill] = useMutation(deleteBillMutation, {
-    refetchQueries: [{ query: userQuery, variables: { id: id } }]
+    onCompleted: deletedBill => {
+      console.log(deletedBill.deleteBill.id);
+      setBills(bills.filter(bill => bill.id !== deletedBill.deleteBill.id));
+    }
   });
 
-  return (
+  return loading ? (
+    <h2>Loading...</h2>
+  ) : (
     <div className='home-wrapper'>
       <div className='navbar'>
         <Link to='/' className='logout-button'>

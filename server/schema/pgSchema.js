@@ -59,8 +59,16 @@ const UserType = new GraphQLObjectType({
       resolve(parent, args) {
         return client
           .query(`SELECT * FROM bills WHERE user_id = ${parent.id}`)
-          .then(res => res.rows)
-          .catch(err => console.log(err));
+          .then(res => {
+            console.log(
+              `select bills from userid: ${parent.id}: ${JSON.stringify(
+                res,
+                null,
+                2
+              )}`
+            );
+            return res.rows;
+          });
       }
     }
   })
@@ -84,6 +92,15 @@ const RootQuery = new GraphQLObjectType({
       resolve(parent, args) {
         return client
           .query(`SELECT * FROM users;`)
+          .then(res => res.rows)
+          .catch(err => console.log(err));
+      }
+    },
+    bills: {
+      type: GraphQLList(BillType),
+      resolve(parent, args) {
+        return client
+          .query(`SELECT * FROM bills;`)
           .then(res => res.rows)
           .catch(err => console.log(err));
       }
@@ -112,8 +129,9 @@ const RootQuery = new GraphQLObjectType({
         return client
           .query(`SELECT * FROM users WHERE username = '${username}'`)
           .then(res => {
+            console.log(res);
             if (res.rows[0].upassword !== password) {
-              return 'Incorrect username or password.';
+              return console.log('Incorrect username or password.');
             } else {
               return res.rows[0];
             }
