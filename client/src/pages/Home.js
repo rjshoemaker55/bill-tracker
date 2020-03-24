@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/react-hooks';
+import { useMutation, useQuery, useLazyQuery } from '@apollo/react-hooks';
 import {
   deleteBillMutation,
   userQuery,
@@ -32,9 +32,18 @@ const Home = props => {
   const [addBill] = useMutation(addBillMutation, {
     onError: error => console.log(`addBill Error: ${error}`),
     onCompleted: res => {
-      const newBill = res.billQuery;
-      console.log(newBill);
+      console.log(res.addBillMutation.id);
+      const newBill = findBill({
+        variables: { id: res.addBillMutation.id }
+      });
       // setBills(bills.push(newBill));
+    }
+  });
+
+  const [findBill] = useLazyQuery(billQuery, {
+    onCompleted: newBill => {
+      console.log(`newBill: ${JSON.stringify(newBill)}`);
+      return newBill;
     }
   });
 

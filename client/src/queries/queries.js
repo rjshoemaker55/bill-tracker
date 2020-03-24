@@ -61,7 +61,10 @@ const billQuery = gql`
       amount
       category
       duedate
-      user
+      user {
+        id
+      }
+    }
   }
 `;
 

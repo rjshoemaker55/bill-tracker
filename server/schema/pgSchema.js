@@ -105,12 +105,15 @@ const RootQuery = new GraphQLObjectType({
         id: { type: new GraphQLNonNull(GraphQLInt) }
       },
       resolve(parent, args) {
+        console.log(args.id);
         return client
-          .query(`SELECT * FROM bills WHERE id=${args.id};`)
-          .then(res => res.rows[0])
+          .query(`SELECT * FROM bills WHERE id=${args.id}`)
+          .then(res =>
+            console.log(`bill query: ${JSON.stringify(res, null, 2)}`)
+          )
           .catch(err => console.log(err));
       }
-    },
+    }, // TODO: FIX BILL QUERY ABOVE *********************
     user: {
       type: UserType,
       args: {
