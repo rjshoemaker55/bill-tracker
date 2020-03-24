@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import { useMutation, useQuery, useLazyQuery } from '@apollo/react-hooks';
 import {
   deleteBillMutation,
-  userQuery,
+  getUserQuery,
   addBillMutation,
-  billQuery
+  getBillQuery
 } from '../queries/queries';
 
 const Home = props => {
@@ -16,32 +16,36 @@ const Home = props => {
   const [newBillAmount, setNewBillAmount] = useState('');
   const [newBillDueDate, setNewBillDueDate] = useState('');
 
+  // Destructures userid from login page
   const { id } = props.history.location.state;
 
-  const { loading } = useQuery(userQuery, {
+  // Brings in user data/bill data from id and sets state to match
+  const { loading } = useQuery(getUserQuery, {
     variables: {
       userId: id
     },
-    onError: error => console.log(`userQuery Error: ${error}`),
+    onError: error => console.log(`getUserQuery Error: ${error}`),
     onCompleted: data => {
       setUser(data.user);
       setBills(data.user.bills);
     }
   });
 
+  // Adds a bill, then calls findBill to update state
   const [addBill] = useMutation(addBillMutation, {
     onError: error => console.log(`addBill Error: ${error}`),
     onCompleted: res => {
       const newBill = findBill({
-        variables: { billId: res.addBillMutation.id }
+        variables: { billId: res.addBill.id }
       });
     }
   });
 
-  const [findBill] = useLazyQuery(billQuery, {
-    onError: error => console.log(`billQuery Error: ${error}`),
-    onCompleted: newBill => {
-      setBills([...bills, newBill.bill]);
+  // Gets new bill data form getBillQuery then updates state
+  const [findBill] = useLazyQuery(getBillQuery, {
+    onError: error => console.log(`getBillQuery Error: ${error}`),
+    onCompleted: res => {
+      setBills([...bills, res.bill]);
       setNewBillName('');
       setNewBillCategory('');
       setNewBillDueDate('');
@@ -49,10 +53,11 @@ const Home = props => {
     }
   });
 
+  // Deletes bill by id, then updates state
   const [deleteBill] = useMutation(deleteBillMutation, {
     onError: error => console.log(`deleteBill Error: ${error}`),
-    onCompleted: deletedBill => {
-      setBills(bills.filter(bill => bill.id !== deletedBill.deleteBill.id));
+    onCompleted: res => {
+      setBills(bills.filter(bill => bill.id !== res.deleteBill.id));
     }
   });
 

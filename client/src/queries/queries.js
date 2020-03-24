@@ -1,13 +1,6 @@
 import { gql } from 'apollo-boost';
 
-const registerMutation = gql`
-  mutation($name: String!, $username: String!, $password: String!) {
-    addUserMutation(uname: $name, username: $username, upassword: $password) {
-      id
-    }
-  }
-`;
-
+// QUERY: Authenticate user and return ID
 const loginQuery = gql`
   query($username: String!, $password: String!) {
     loginUser(username: $username, password: $password) {
@@ -16,6 +9,7 @@ const loginQuery = gql`
   }
 `;
 
+// QUERY: Get all users
 const getUsersQuery = gql`
   {
     users {
@@ -26,7 +20,8 @@ const getUsersQuery = gql`
   }
 `;
 
-const userQuery = gql`
+// QUERY: Get single user by id
+const getUserQuery = gql`
   query($userId: Int!) {
     user(userId: $userId) {
       id
@@ -43,7 +38,8 @@ const userQuery = gql`
   }
 `;
 
-const billQuery = gql`
+// QUERY: Get single bill
+const getBillQuery = gql`
   query($billId: Int!) {
     bill(billId: $billId) {
       id
@@ -55,6 +51,16 @@ const billQuery = gql`
   }
 `;
 
+// MUTATION: Add new user
+const addUserMutation = gql`
+  mutation($name: String!, $username: String!, $password: String!) {
+    addUser(uname: $name, username: $username, upassword: $password) {
+      id
+    }
+  }
+`;
+
+// MUTATION: Add new bill
 const addBillMutation = gql`
   mutation(
     $billname: String!
@@ -63,7 +69,7 @@ const addBillMutation = gql`
     $category: String
     $user: Int!
   ) {
-    addBillMutation(
+    addBill(
       billname: $billname
       amount: $amount
       duedate: $duedate
@@ -75,6 +81,7 @@ const addBillMutation = gql`
   }
 `;
 
+// MUTATION: Delete bill
 const deleteBillMutation = gql`
   mutation($id: Int!) {
     deleteBill(id: $id) {
@@ -85,10 +92,10 @@ const deleteBillMutation = gql`
 
 export {
   loginQuery,
-  registerMutation,
+  addUserMutation,
   getUsersQuery,
-  userQuery,
-  billQuery,
+  getUserQuery,
+  getBillQuery,
   deleteBillMutation,
   addBillMutation
 };

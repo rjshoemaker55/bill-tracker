@@ -3,13 +3,11 @@ const { Client } = require('pg');
 
 const {
   GraphQLObjectType,
-  GraphQLID,
   GraphQLString,
   GraphQLInt,
   GraphQLList,
   GraphQLNonNull,
-  GraphQLSchema,
-  GraphQLObject
+  GraphQLSchema
 } = graphql;
 
 // Initialize Postgres database
@@ -81,24 +79,7 @@ const UserType = new GraphQLObjectType({
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
   fields: {
-    bills: {
-      type: GraphQLList(BillType),
-      resolve(parent, args) {
-        return client
-          .query(`SELECT * FROM bills;`)
-          .then(res => res.rows)
-          .catch(err => console.log(err));
-      }
-    },
-    users: {
-      type: GraphQLList(UserType),
-      resolve(parent, args) {
-        return client
-          .query(`SELECT * FROM users;`)
-          .then(res => res.rows)
-          .catch(err => console.log(err));
-      }
-    },
+    // Retrieve one bill
     bill: {
       type: BillType,
       args: {
@@ -112,7 +93,18 @@ const RootQuery = new GraphQLObjectType({
           })
           .catch(err => console.log(err));
       }
-    }, // TODO: FIX BILL QUERY ABOVE *********************
+    },
+    // Retrieve all bills
+    bills: {
+      type: GraphQLList(BillType),
+      resolve(parent, args) {
+        return client
+          .query(`SELECT * FROM bills;`)
+          .then(res => res.rows)
+          .catch(err => console.log(err));
+      }
+    },
+    // Retrieve one user
     user: {
       type: UserType,
       args: {
@@ -126,6 +118,17 @@ const RootQuery = new GraphQLObjectType({
           });
       }
     },
+    // Retrieve all users
+    users: {
+      type: GraphQLList(UserType),
+      resolve(parent, args) {
+        return client
+          .query(`SELECT * FROM users;`)
+          .then(res => res.rows)
+          .catch(err => console.log(err));
+      }
+    },
+    // Authenticate user
     loginUser: {
       type: UserType,
       args: {
@@ -138,7 +141,7 @@ const RootQuery = new GraphQLObjectType({
           .query(`SELECT * FROM users WHERE username = '${username}'`)
           .then(res => {
             if (res.rows[0].upassword !== password) {
-              return console.log('Incorrect username or password.');
+              return console.log('Incorrect username or password.'); // TODO: Add error handling for wrong username or password
             } else {
               return res.rows[0];
             }
@@ -152,7 +155,8 @@ const RootQuery = new GraphQLObjectType({
 const Mutation = new GraphQLObjectType({
   name: 'Mutation',
   fields: {
-    addBillMutation: {
+    // Add new bill
+    addBill: {
       type: BillType,
       args: {
         billname: { type: new GraphQLNonNull(GraphQLString) },
@@ -176,7 +180,8 @@ const Mutation = new GraphQLObjectType({
           .catch(err => console.log(err));
       }
     },
-    addUserMutation: {
+    // Add new user
+    addUser: {
       type: UserType,
       args: {
         uname: { type: new GraphQLNonNull(GraphQLString) },
@@ -200,6 +205,7 @@ const Mutation = new GraphQLObjectType({
           .catch(err => console.log(err));
       }
     },
+    // Delete bill
     deleteBill: {
       type: BillType,
       args: {

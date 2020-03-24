@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useLazyQuery, useMutation } from '@apollo/react-hooks';
 
-import { loginQuery, registerMutation } from '../queries/queries';
+import { loginQuery, addUserMutation } from '../queries/queries';
 
 const Login = props => {
   const [login, setLogin] = useState(true);
@@ -22,17 +22,16 @@ const Login = props => {
     }
   });
 
-  const [registerUser] = useMutation(registerMutation, {
+  const [registerUser] = useMutation(addUserMutation, {
     variables: {
       name: name,
       username: username,
       password: password
     },
     onCompleted: data => {
-      console.log(data);
       props.history.push({
         pathname: '/home',
-        state: data.addUserMutation
+        state: data.addUser
       });
     }
   });
