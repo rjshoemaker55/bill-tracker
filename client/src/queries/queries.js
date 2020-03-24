@@ -54,16 +54,13 @@ const userQuery = gql`
 `;
 
 const billQuery = gql`
-  query($id: Int!) {
-    bill(id: $id) {
+  query($billId: Int!) {
+    bill(billId: $billId) {
       id
       billname
       amount
       category
       duedate
-      user {
-        id
-      }
     }
   }
 `;

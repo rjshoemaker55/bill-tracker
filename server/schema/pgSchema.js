@@ -102,15 +102,14 @@ const RootQuery = new GraphQLObjectType({
     bill: {
       type: BillType,
       args: {
-        id: { type: new GraphQLNonNull(GraphQLInt) }
+        billId: { type: new GraphQLNonNull(GraphQLInt) }
       },
       resolve(parent, args) {
-        console.log(args.id);
         return client
-          .query(`SELECT * FROM bills WHERE id=${args.id}`)
-          .then(res =>
-            console.log(`bill query: ${JSON.stringify(res, null, 2)}`)
-          )
+          .query(`SELECT * FROM bills WHERE id=${args.billId};`)
+          .then(res => {
+            return res.rows[0];
+          })
           .catch(err => console.log(err));
       }
     }, // TODO: FIX BILL QUERY ABOVE *********************
@@ -164,8 +163,6 @@ const Mutation = new GraphQLObjectType({
       },
       resolve(parent, args) {
         const { billname, amount, duedate, category, user } = args;
-
-        console.log('Add bill mutation');
 
         return client
           .query(

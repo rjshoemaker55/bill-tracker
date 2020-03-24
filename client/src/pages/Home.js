@@ -26,27 +26,26 @@ const Home = props => {
     onCompleted: data => {
       setUser(data.user);
       setBills(data.user.bills);
+      console.log(data.user.bills[0]);
     }
   });
 
   const [addBill] = useMutation(addBillMutation, {
     onError: error => console.log(`addBill Error: ${error}`),
     onCompleted: res => {
-      console.log(res.addBillMutation.id);
       const newBill = findBill({
-        variables: { id: res.addBillMutation.id }
+        variables: { billId: res.addBillMutation.id }
       });
-      // setBills(bills.push(newBill));
     }
   });
 
   const [findBill] = useLazyQuery(billQuery, {
     onCompleted: newBill => {
-      console.log(`newBill: ${JSON.stringify(newBill)}`);
-      return newBill;
+      setBills([...bills, newBill.bill]);
     }
   });
 
+  console.log(bills);
   const [deleteBill] = useMutation(deleteBillMutation, {
     onError: error => console.log(`deleteBill Error: ${error}`),
     onCompleted: deletedBill => {
