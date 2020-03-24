@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { useLazyQuery } from '@apollo/react-hooks';
+import { useLazyQuery, useMutation } from '@apollo/react-hooks';
 
-import { loginQuery } from '../queries/queries';
+import { loginQuery, registerMutation } from '../queries/queries';
 
 const Login = props => {
   const [login, setLogin] = useState(true);
@@ -17,13 +17,36 @@ const Login = props => {
     onCompleted: data => {
       props.history.push({
         pathname: '/home',
-        state: data
+        state: data.loginUser
+      });
+    }
+  });
+
+  const [registerUser] = useMutation(registerMutation, {
+    variables: {
+      name: name,
+      username: username,
+      password: password
+    },
+    onCompleted: data => {
+      console.log(data);
+      props.history.push({
+        pathname: '/home',
+        state: data.addUserMutation
       });
     }
   });
 
   return (
     <>
+      {!login && (
+        <input
+          value={name}
+          onChange={e => setName(e.target.value)}
+          type='text'
+          placeholder='Name'
+        />
+      )}
       <input
         value={username}
         onChange={e => setUsername(e.target.value)}
@@ -38,11 +61,14 @@ const Login = props => {
       />
       <button
         onClick={e => {
-          loginUser();
+          login ? loginUser() : registerUser();
         }}
       >
-        Login
+        {login ? 'Login' : 'Register'}
       </button>
+      <div id='register-login-link' onClick={() => setLogin(!login)}>
+        {login ? 'Register' : 'Create Account'}
+      </div>
     </>
   );
 };

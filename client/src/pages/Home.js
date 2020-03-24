@@ -16,17 +16,16 @@ const Home = props => {
   const [newBillAmount, setNewBillAmount] = useState('');
   const [newBillDueDate, setNewBillDueDate] = useState('');
 
-  const { id } = props.history.location.state.loginUser;
+  const { id } = props.history.location.state;
 
   const { loading } = useQuery(userQuery, {
     variables: {
       userId: id
     },
-
+    onError: error => console.log(`userQuery Error: ${error}`),
     onCompleted: data => {
       setUser(data.user);
       setBills(data.user.bills);
-      console.log(data.user.bills[0]);
     }
   });
 
@@ -40,12 +39,16 @@ const Home = props => {
   });
 
   const [findBill] = useLazyQuery(billQuery, {
+    onError: error => console.log(`billQuery Error: ${error}`),
     onCompleted: newBill => {
       setBills([...bills, newBill.bill]);
+      setNewBillName('');
+      setNewBillCategory('');
+      setNewBillDueDate('');
+      setNewBillAmount('');
     }
   });
 
-  console.log(bills);
   const [deleteBill] = useMutation(deleteBillMutation, {
     onError: error => console.log(`deleteBill Error: ${error}`),
     onCompleted: deletedBill => {
@@ -142,9 +145,6 @@ const Home = props => {
                 <button
                   className='add-bill-button'
                   onClick={() => {
-                    console.log(
-                      `billname: ${newBillName}, amount: ${newBillAmount}, category: ${newBillCategory}, ${newBillDueDate}, ${id}`
-                    );
                     addBill({
                       variables: {
                         billname: newBillName,

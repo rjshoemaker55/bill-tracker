@@ -186,11 +186,13 @@ const Mutation = new GraphQLObjectType({
       resolve(parent, args) {
         const { uname, username, upassword } = args;
 
+        console.log(args);
+
         return client
           .query(
             `
               INSERT INTO users (uname, username, upassword)
-              VALUES ("${uname}", "${username}", "${upassword}")
+              VALUES ('${uname}', '${username}', '${upassword}')
               RETURNING id, uname, username;
             `
           )
