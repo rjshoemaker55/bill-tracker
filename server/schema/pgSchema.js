@@ -40,7 +40,10 @@ const BillType = new GraphQLObjectType({
       resolve(parent, args) {
         return client
           .query(`SELECT * FROM users WHERE id = ${parent.user_id}`)
-          .then(res => res.rows[0])
+          .then(res => {
+            console.log('BillType Users Resolver');
+            return res.rows[0];
+          })
           .catch(err => console.log(err));
       }
     }
@@ -96,12 +99,15 @@ const RootQuery = new GraphQLObjectType({
           .catch(err => console.log(err));
       }
     },
-    bills: {
-      type: GraphQLList(BillType),
+    bill: {
+      type: BillType,
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLInt) }
+      },
       resolve(parent, args) {
         return client
-          .query(`SELECT * FROM bills;`)
-          .then(res => res.rows)
+          .query(`SELECT * FROM bills WHERE id=${args.id};`)
+          .then(res => res.rows[0])
           .catch(err => console.log(err));
       }
     },
@@ -129,7 +135,6 @@ const RootQuery = new GraphQLObjectType({
         return client
           .query(`SELECT * FROM users WHERE username = '${username}'`)
           .then(res => {
-            console.log(res);
             if (res.rows[0].upassword !== password) {
               return console.log('Incorrect username or password.');
             } else {
@@ -145,7 +150,7 @@ const RootQuery = new GraphQLObjectType({
 const Mutation = new GraphQLObjectType({
   name: 'Mutation',
   fields: {
-    addBill: {
+    addBillMutation: {
       type: BillType,
       args: {
         billname: { type: new GraphQLNonNull(GraphQLString) },
@@ -156,6 +161,8 @@ const Mutation = new GraphQLObjectType({
       },
       resolve(parent, args) {
         const { billname, amount, duedate, category, user } = args;
+
+        console.log('Add bill mutation');
 
         return client
           .query(
@@ -169,12 +176,12 @@ const Mutation = new GraphQLObjectType({
           .catch(err => console.log(err));
       }
     },
-    addUser: {
+    addUserMutation: {
       type: UserType,
       args: {
-        name: { type: new GraphQLNonNull(GraphQLString) },
+        uname: { type: new GraphQLNonNull(GraphQLString) },
         username: { type: new GraphQLNonNull(GraphQLString) },
-        password: { type: new GraphQLNonNull(GraphQLString) }
+        upassword: { type: new GraphQLNonNull(GraphQLString) }
       },
       resolve(parent, args) {
         const { uname, username, upassword } = args;
@@ -183,8 +190,8 @@ const Mutation = new GraphQLObjectType({
           .query(
             `
               INSERT INTO users (uname, username, upassword)
-              VALUES ('${name}', '${username}', '${password}')
-              RETURNING id, uname, username
+              VALUES ("${uname}", "${username}", "${upassword}")
+              RETURNING id, uname, username;
             `
           )
           .then(res => res.rows[0])

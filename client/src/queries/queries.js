@@ -53,6 +53,38 @@ const userQuery = gql`
   }
 `;
 
+const billQuery = gql`
+  query($id: Int!) {
+    bill(id: $id) {
+      id
+      billname
+      amount
+      category
+      duedate
+      user
+  }
+`;
+
+const addBillMutation = gql`
+  mutation(
+    $billname: String!
+    $amount: Int!
+    $duedate: Int!
+    $category: String
+    $user: Int!
+  ) {
+    addBillMutation(
+      billname: $billname
+      amount: $amount
+      duedate: $duedate
+      category: $category
+      user: $user
+    ) {
+      id
+    }
+  }
+`;
+
 const deleteBillMutation = gql`
   mutation($id: Int!) {
     deleteBill(id: $id) {
@@ -66,5 +98,7 @@ export {
   registerMutation,
   getUsersQuery,
   userQuery,
-  deleteBillMutation
+  billQuery,
+  deleteBillMutation,
+  addBillMutation
 };

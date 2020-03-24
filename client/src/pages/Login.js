@@ -9,7 +9,7 @@ const Login = props => {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
 
-  const [loginUser, { loading, data }] = useLazyQuery(loginQuery, {
+  const [loginUser] = useLazyQuery(loginQuery, {
     variables: {
       username,
       password
@@ -38,9 +38,7 @@ const Login = props => {
       />
       <button
         onClick={e => {
-          loginUser({
-            variables: { username, password }
-          });
+          loginUser();
         }}
       >
         Login

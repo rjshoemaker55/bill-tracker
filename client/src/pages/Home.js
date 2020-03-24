@@ -1,11 +1,20 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/react-hooks';
-import { deleteBillMutation, userQuery } from '../queries/queries';
+import {
+  deleteBillMutation,
+  userQuery,
+  addBillMutation,
+  billQuery
+} from '../queries/queries';
 
 const Home = props => {
   const [user, setUser] = useState({});
   const [bills, setBills] = useState([]);
+  const [newBillName, setNewBillName] = useState('');
+  const [newBillCategory, setNewBillCategory] = useState('');
+  const [newBillAmount, setNewBillAmount] = useState('');
+  const [newBillDueDate, setNewBillDueDate] = useState('');
 
   const { id } = props.history.location.state.loginUser;
 
@@ -13,18 +22,25 @@ const Home = props => {
     variables: {
       userId: id
     },
+
     onCompleted: data => {
       setUser(data.user);
       setBills(data.user.bills);
     }
   });
 
-  // const user = !loading && data.user;
-  // const bills = !loading && data.user.bills;
+  const [addBill] = useMutation(addBillMutation, {
+    onError: error => console.log(`addBill Error: ${error}`),
+    onCompleted: res => {
+      const newBill = res.billQuery;
+      console.log(newBill);
+      // setBills(bills.push(newBill));
+    }
+  });
 
   const [deleteBill] = useMutation(deleteBillMutation, {
+    onError: error => console.log(`deleteBill Error: ${error}`),
     onCompleted: deletedBill => {
-      console.log(deletedBill.deleteBill.id);
       setBills(bills.filter(bill => bill.id !== deletedBill.deleteBill.id));
     }
   });
@@ -70,9 +86,6 @@ const Home = props => {
                   <td>
                     <button
                       onClick={() => {
-                        console.log(
-                          'Delete button clicked for bill with id ' + bill.id
-                        );
                         deleteBill({ variables: { id: bill.id } });
                       }}
                     >
@@ -81,6 +94,64 @@ const Home = props => {
                   </td>
                 </tr>
               ))}
+
+            <tr>
+              <td>
+                <input
+                  className='newBillName'
+                  value={newBillName}
+                  placeholder='New Bill'
+                  onChange={e => setNewBillName(e.target.value)}
+                />
+              </td>
+              <td>
+                <input
+                  className='newBillCategory'
+                  value={newBillCategory}
+                  placeholder='Category'
+                  onChange={e => setNewBillCategory(e.target.value)}
+                />
+              </td>
+              <td>
+                <input
+                  className='newBillAmount'
+                  value={newBillAmount}
+                  type='number'
+                  placeholder='Amount'
+                  onChange={e => setNewBillAmount(parseInt(e.target.value))}
+                />
+              </td>
+              <td>
+                <input
+                  className='newBillDueDate'
+                  value={newBillDueDate}
+                  placeholder='Due Date'
+                  type='number'
+                  onChange={e => setNewBillDueDate(parseInt(e.target.value))}
+                />
+              </td>
+              <td>
+                <button
+                  className='add-bill-button'
+                  onClick={() => {
+                    console.log(
+                      `billname: ${newBillName}, amount: ${newBillAmount}, category: ${newBillCategory}, ${newBillDueDate}, ${id}`
+                    );
+                    addBill({
+                      variables: {
+                        billname: newBillName,
+                        amount: newBillAmount,
+                        category: newBillCategory,
+                        duedate: newBillDueDate,
+                        user: id
+                      }
+                    });
+                  }}
+                >
+                  +
+                </button>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
