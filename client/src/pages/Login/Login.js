@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useLazyQuery, useMutation } from '@apollo/react-hooks';
-
-import { loginQuery, addUserMutation } from '../queries/queries';
+import { loginQuery, addUserMutation } from '../../queries/queries';
+import './login.css';
 
 const Login = props => {
   const [login, setLogin] = useState(true);
@@ -37,13 +37,19 @@ const Login = props => {
   });
 
   return (
-    <>
+    <div id='login-wrapper'>
+      <div id='login-header-wrapper'>
+        <div id='login-header'>Bill Keeper.</div>
+        <div id='login-subheader'>Login or Register:</div>
+      </div>
       {!login && (
         <input
           value={name}
           onChange={e => setName(e.target.value)}
           type='text'
           placeholder='Name'
+          className='login-field'
+          autoComplete='new-password'
         />
       )}
       <input
@@ -51,24 +57,29 @@ const Login = props => {
         onChange={e => setUsername(e.target.value)}
         type='text'
         placeholder='Username'
+        className='login-field'
+        autoComplete='new-password'
       />
       <input
         value={password}
         onChange={e => setPassword(e.target.value)}
-        type='text'
+        type='password'
         placeholder='Password'
+        className='login-field'
+        autoComplete='new-password'
       />
       <button
+        className='register-login-button'
         onClick={e => {
           login ? loginUser() : registerUser();
         }}
       >
         {login ? 'Login' : 'Register'}
       </button>
-      <div id='register-login-link' onClick={() => setLogin(!login)}>
+      <div className='register-login-switch' onClick={() => setLogin(!login)}>
         {login ? 'Register' : 'Create Account'}
       </div>
-    </>
+    </div>
   );
 };
 

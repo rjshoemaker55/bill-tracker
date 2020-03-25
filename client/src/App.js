@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
 
-import Login from './pages/Login';
-import Home from './pages/Home';
+import Login from './pages/Login/Login';
+import Home from './pages/Home/Home';
 import './App.css';
 
 const client = new ApolloClient({

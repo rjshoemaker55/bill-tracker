@@ -6,7 +6,7 @@ import {
   getUserQuery,
   addBillMutation,
   getBillQuery
-} from '../queries/queries';
+} from '../../queries/queries';
 
 const Home = props => {
   const [user, setUser] = useState({});
