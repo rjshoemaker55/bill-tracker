@@ -19,10 +19,10 @@
 
 ## What's to come:
 
+ - Fix suffixes for due dates
  - Real authentication
  - Mobile responsiveness
  - Login validation
  - Update feature for bills
- - Fix suffixes for due dates
  - Calendar selection for due dates
  - Text/email notifications
