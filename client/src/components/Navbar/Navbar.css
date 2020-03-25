@@ -1,0 +1,54 @@
+#navbar-wrapper {
+  position: relative;
+  display: flex;
+  flex: 1;
+  background: rgba(var(--green));
+}
+
+.navbar-item {
+  display: inline-block;
+}
+
+#navbar-left-display {
+  flex: 1;
+  margin-left: 20px;
+}
+
+#navbar-center-display {
+  flex: 1;
+  text-align: center;
+}
+#navbar-right-display {
+  flex: 1;
+  text-align: right;
+  margin-right: 20px;
+}
+
+#navbar-title {
+  font-size: 35px;
+  font-weight: bold;
+}
+
+#logged-in-display {
+  margin-top: 9px;
+  font-size: 25px;
+}
+
+#logout-button {
+  margin-top: 9px;
+  padding: 0px 10px;
+  font-size: 25px;
+  background: rgba(var(--yellow), 0.7);
+  display: inline-block;
+  font-weight: bold;
+  border-radius: 5px;
+  color: rgb(85, 26, 139);
+  transition-duration: 0.3s;
+}
+#logout-button:hover {
+  background: rgba(var(--yellow), 1);
+}
+
+#logout-text {
+  text-decoration: none;
+}

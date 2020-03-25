@@ -7,6 +7,7 @@ import {
   addBillMutation,
   getBillQuery
 } from '../../queries/queries';
+import Navbar from '../../components/Navbar/Navbar';
 
 const Home = props => {
   const [user, setUser] = useState({});
@@ -65,12 +66,7 @@ const Home = props => {
     <h2>Loading...</h2>
   ) : (
     <div className='home-wrapper'>
-      <div className='navbar'>
-        <Link to='/' className='logout-button'>
-          Logout
-        </Link>
-        <div className='logged-in-display'>{user.uname}</div>
-      </div>
+      <Navbar uname={user.uname} />
       <div className='home-content-wrapper'>
         <table>
           <thead>
