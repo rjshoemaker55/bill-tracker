@@ -108,7 +108,8 @@ const Home = props => {
                     </td>
                     <td className='centered'>
                       <button
-                        className='table-delete-button'
+                        id='table-delete-button'
+                        className='table-button'
                         onClick={() => {
                           deleteBill({ variables: { id: bill.id } });
                         }}
@@ -123,7 +124,7 @@ const Home = props => {
             <tr>
               <td>
                 <input
-                  className='newBillName'
+                  className='new-bill-field'
                   value={newBillName}
                   placeholder='New Bill'
                   onChange={e => setNewBillName(e.target.value)}
@@ -131,7 +132,7 @@ const Home = props => {
               </td>
               <td>
                 <input
-                  className='newBillCategory'
+                  className='new-bill-field'
                   value={newBillCategory}
                   placeholder='Category'
                   onChange={e => setNewBillCategory(e.target.value)}
@@ -139,7 +140,7 @@ const Home = props => {
               </td>
               <td>
                 <input
-                  className='newBillAmount'
+                  className='new-bill-field'
                   value={newBillAmount}
                   type='number'
                   placeholder='Amount'
@@ -148,7 +149,7 @@ const Home = props => {
               </td>
               <td>
                 <input
-                  className='newBillDueDate'
+                  className='new-bill-field'
                   value={newBillDueDate}
                   placeholder='Due Date'
                   type='number'
@@ -157,7 +158,8 @@ const Home = props => {
               </td>
               <td className='centered'>
                 <button
-                  className='add-bill-button'
+                  id='add-bill-button'
+                  className='table-button'
                   onClick={() => {
                     addBill({
                       variables: {

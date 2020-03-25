@@ -37,3 +37,40 @@ td {
 .reg-row {
   background: rgb(var(--pink), 0.4);
 }
+
+.table-button {
+  font-size: 20px;
+  border-radius: 5px;
+  border: none;
+  font-weight: bold;
+  padding: 5px 10px;
+  transition-duration: 0.3s;
+}
+
+#table-delete-button {
+  background: rgba(var(--red), 0.7);
+}
+
+#table-delete-button:hover {
+  background: rgba(var(--red), 1);
+  cursor: pointer;
+}
+
+.new-bill-field {
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-bottom: 3px solid rgba(var(--dark-gray), 0.9);
+  background: transparent;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+#add-bill-button {
+  background: rgba(var(--green), 0.7);
+}
+
+#add-bill-button:hover {
+  background: rgba(var(--green), 1);
+  cursor: pointer;
+}
