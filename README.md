@@ -19,6 +19,8 @@
 
 ## What's to come:
 
+ - Real authentication
+ - Mobile responsiveness
  - Login validation
  - Update feature for bills
  - Fix suffixes for due dates
