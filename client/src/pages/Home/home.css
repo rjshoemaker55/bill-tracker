@@ -1,0 +1,39 @@
+#bill-table {
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+#table-header-row {
+  font-size: 40px;
+  text-align: left;
+  background: rgba(var(--yellow), 1);
+  border-radius: 10px;
+}
+
+th {
+  padding: 10px 20px;
+}
+
+td {
+  width: 220px;
+  font-size: 30px;
+  padding: 5px;
+  border: none;
+  padding: 10px 20px;
+}
+
+#table-delete-column {
+  text-align: center;
+}
+
+.centered {
+  text-align: center;
+}
+
+.green-row {
+  background: rgb(var(--blue), 0.4);
+}
+
+.reg-row {
+  background: rgb(var(--pink), 0.4);
+}

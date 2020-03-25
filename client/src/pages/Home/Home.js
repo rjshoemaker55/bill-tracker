@@ -8,6 +8,7 @@ import {
   getBillQuery
 } from '../../queries/queries';
 import Navbar from '../../components/Navbar/Navbar';
+import './home.css';
 
 const Home = props => {
   const [user, setUser] = useState({});
@@ -16,6 +17,8 @@ const Home = props => {
   const [newBillCategory, setNewBillCategory] = useState('');
   const [newBillAmount, setNewBillAmount] = useState('');
   const [newBillDueDate, setNewBillDueDate] = useState('');
+
+  let rows = 0;
 
   // Destructures userid from login page
   const { id } = props.history.location.state;
@@ -63,49 +66,59 @@ const Home = props => {
   });
 
   return loading ? (
-    <h2>Loading...</h2>
+    <>
+      <Navbar uname='Loading' />
+      <h2>Loading...</h2>
+    </>
   ) : (
-    <div className='home-wrapper'>
+    <>
       <Navbar uname={user.uname} />
-      <div className='home-content-wrapper'>
-        <table>
+      <div id='home-wrapper'>
+        <table align='center' id='bill-table'>
           <thead>
-            <tr>
+            <tr id='table-header-row'>
               <th>Bill Name</th>
               <th>Category</th>
-              <th>Amount</th>
-              <th>Due Date</th>
-              <th>Delete</th>
+              <th className='centered'>Amount</th>
+              <th className='centered'>Due Date</th>
+              <th id='table-delete-column'>Delete</th>
             </tr>
           </thead>
           <tbody>
             {!loading &&
-              bills.map(bill => (
-                <tr key={bill.id}>
-                  <td>{bill.billname}</td>
-                  <td>{bill.category ? `${bill.category}` : 'None'}</td>
-                  <td>${bill.amount}</td>
-                  <td>
-                    {bill.duedate}
-                    {bill.duedate[0] === 1 || bill.duedate[1] === 1
-                      ? 'st'
-                      : bill.duedate[0] === 2 || bill.duedate[1] === 2
-                      ? 'nd'
-                      : bill.duedate[0] === 3 || bill.duedate[1] === 3
-                      ? 'rd'
-                      : 'th'}
-                  </td>
-                  <td>
-                    <button
-                      onClick={() => {
-                        deleteBill({ variables: { id: bill.id } });
-                      }}
-                    >
-                      X
-                    </button>
-                  </td>
-                </tr>
-              ))}
+              bills.map(bill => {
+                rows++;
+                return (
+                  <tr
+                    key={bill.id}
+                    className={rows % 2 === 0 ? 'green-row' : 'reg-row'}
+                  >
+                    <td>{bill.billname}</td>
+                    <td>{bill.category ? `${bill.category}` : 'None'}</td>
+                    <td className='centered'>${bill.amount}</td>
+                    <td className='centered'>
+                      {bill.duedate}
+                      {bill.duedate[0] === 1 || bill.duedate[1] === 1
+                        ? 'st'
+                        : bill.duedate[0] === 2 || bill.duedate[1] === 2
+                        ? 'nd'
+                        : bill.duedate[0] == 3 || bill.duedate[1] == 3
+                        ? 'rd'
+                        : 'th'}
+                    </td>
+                    <td className='centered'>
+                      <button
+                        className='table-delete-button'
+                        onClick={() => {
+                          deleteBill({ variables: { id: bill.id } });
+                        }}
+                      >
+                        X
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
 
             <tr>
               <td>
@@ -142,7 +155,7 @@ const Home = props => {
                   onChange={e => setNewBillDueDate(parseInt(e.target.value))}
                 />
               </td>
-              <td>
+              <td className='centered'>
                 <button
                   className='add-bill-button'
                   onClick={() => {
@@ -164,7 +177,7 @@ const Home = props => {
           </tbody>
         </table>
       </div>
-    </div>
+    </>
   );
 };
 
