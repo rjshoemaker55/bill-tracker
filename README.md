@@ -26,3 +26,4 @@
  - Update feature for bills
  - Calendar selection for due dates
  - Text/email notifications
+ - User settings
