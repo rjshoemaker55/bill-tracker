@@ -8,6 +8,7 @@ import {
   getBillQuery
 } from '../../queries/queries';
 import Navbar from '../../components/Navbar/Navbar';
+import BillRow from '../../components/BillRow/BillRow';
 import './home.css';
 
 const Home = props => {
@@ -81,7 +82,7 @@ const Home = props => {
               <th>Category</th>
               <th className='centered'>Amount</th>
               <th className='centered'>Due Date</th>
-              <th id='table-delete-column'>Delete</th>
+              <th id='table-delete-column'></th>
             </tr>
           </thead>
           <tbody>
@@ -89,35 +90,17 @@ const Home = props => {
               bills.map(bill => {
                 rows++;
                 return (
-                  <tr
-                    key={bill.id}
-                    className={rows % 2 === 0 ? 'green-row' : 'reg-row'}
-                  >
-                    <td>{bill.billname}</td>
-                    <td>{bill.category ? `${bill.category}` : 'None'}</td>
-                    <td className='centered'>${bill.amount}</td>
-                    <td className='centered'>
-                      {bill.duedate}
-                      {bill.duedate[0] === 1 || bill.duedate[1] === 1
-                        ? 'st'
-                        : bill.duedate[0] === 2 || bill.duedate[1] === 2
-                        ? 'nd'
-                        : bill.duedate[0] == 3 || bill.duedate[1] == 3
-                        ? 'rd'
-                        : 'th'}
-                    </td>
-                    <td className='centered'>
-                      <button
-                        id='table-delete-button'
-                        className='table-button'
-                        onClick={() => {
-                          deleteBill({ variables: { id: bill.id } });
-                        }}
-                      >
-                        X
-                      </button>
-                    </td>
-                  </tr>
+                  <BillRow
+                    id={bill.id}
+                    className={!(rows % 2) ? 'green-row' : 'reg-row'}
+                    billname={bill.billname}
+                    amount={bill.amount}
+                    category={bill.category}
+                    duedate={bill.duedate}
+                    onClick={() => {
+                      deleteBill({ variables: { id: bill.id } });
+                    }}
+                  />
                 );
               })}
 

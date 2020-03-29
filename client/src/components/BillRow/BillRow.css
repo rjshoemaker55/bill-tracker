@@ -1,0 +1,29 @@
+.green-row {
+  background: rgb(var(--blue), 0.4);
+}
+
+.reg-row {
+  background: rgb(var(--pink), 0.4);
+}
+
+.table-button {
+  font-size: 20px;
+  border-radius: 5px;
+  border: none;
+  font-weight: bold;
+  padding: 5px 10px;
+  transition-duration: 0.8s;
+}
+
+#table-delete-button {
+  background: rgba(var(--red), 0.7);
+}
+
+#table-update-button {
+  background: rgba(var(--yellow), 0.7);
+}
+
+#table-delete-button:hover {
+  background: rgba(var(--red), 1);
+  cursor: pointer;
+}
