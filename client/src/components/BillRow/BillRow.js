@@ -4,33 +4,66 @@ import './BillRow.css';
 
 const BillRow = props => {
   const { id, className, billname, amount, category, duedate, onClick } = props;
+
+  const [newBillName, setNewBillName] = useState(billname);
   const [newAmount, setNewAmount] = useState(amount);
+  const [newCategory, setNewCategory] = useState(category);
+  const [newDueDate, setNewDueDate] = useState(duedate);
   const [buttonType, setButtonType] = useState('table-delete-button');
 
-  const editField = e => {
+  const editField = (e, field) => {
     e.preventDefault();
-    setNewAmount(e.target.value);
     setButtonType('table-update-button');
-    console.log(buttonType);
+    switch (field) {
+      case 'billname':
+        setNewBillName(e.target.value);
+        break;
+      case 'category':
+        setNewCategory(e.target.value);
+        break;
+      case 'amount':
+        setNewAmount(e.target.value);
+        break;
+      case 'duedate':
+        setNewDueDate(e.target.value);
+        break;
+    }
+    setNewAmount(e.target.value);
   };
 
-  console.log(buttonType);
   return (
     <tr key={id} className={className}>
-      <td>{billname}</td>
-      <td>{category ? `${category}` : 'None'}</td>
-      <td className='centered'>
-        <input value={newAmount} onChange={e => editField(e)} />
+      <td>
+        <input
+          className='bill-item'
+          value={newBillName}
+          onChange={e => editField(e, 'billname')}
+        />
       </td>
-      <td className='centered'>
-        {duedate}
-        {duedate[0] === 1 || duedate[1] === 1
-          ? 'st'
-          : duedate[0] === 2 || duedate[1] === 2
-          ? 'nd'
-          : duedate[0] == 3 || duedate[1] == 3
-          ? 'rd'
-          : 'th'}
+      <td>
+        {category ? (
+          <input
+            className='bill-item'
+            value={newCategory}
+            onChange={e => editField(e, 'category')}
+          />
+        ) : (
+          'None'
+        )}
+      </td>
+      <td>
+        <input
+          className='bill-item centered'
+          value={newAmount}
+          onChange={e => editField(e, 'amount')}
+        />
+      </td>
+      <td>
+        <input
+          className='bill-item centered'
+          value={newDueDate}
+          onChange={e => editField(e, 'duedate')}
+        />
       </td>
       <td className='centered'>
         <button id={buttonType} className='table-button' onClick={onClick}>

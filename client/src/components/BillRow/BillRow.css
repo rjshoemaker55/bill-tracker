@@ -6,6 +6,12 @@
   background: rgb(var(--pink), 0.4);
 }
 
+.bill-item {
+  font-size: 30px;
+  background: transparent;
+  border: none;
+}
+
 .table-button {
   font-size: 20px;
   border-radius: 5px;
@@ -25,5 +31,10 @@
 
 #table-delete-button:hover {
   background: rgba(var(--red), 1);
+  cursor: pointer;
+}
+
+#table-update-button:hover {
+  background: rgba(var(--yellow), 1);
   cursor: pointer;
 }
