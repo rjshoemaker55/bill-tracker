@@ -23,6 +23,7 @@ const Home = props => {
 
   let rows = 0;
 
+  // Sorts bills in alphabetical order
   let sortedBills = bills.sort((a, b) => {
     return a.billname.toLowerCase().localeCompare(b.billname.toLowerCase());
   });

@@ -91,7 +91,7 @@ const Login = props => {
         {login ? 'Login' : 'Register'}
       </button>
       <div className='register-login-switch' onClick={() => setLogin(!login)}>
-        {login ? 'Register' : 'Create Account'}
+        {login ? 'Register' : 'Login'}
       </div>
     </div>
   );

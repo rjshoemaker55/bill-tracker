@@ -7,7 +7,7 @@
 }
 
 #bill-table {
-  margin-top: 5px;
+  margin: 5px 10px 10px 0px;
   border-collapse: collapse;
   border: 2px rgba(255, 255, 255, 0.5) solid;
 }
