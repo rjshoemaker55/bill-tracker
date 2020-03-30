@@ -24,10 +24,8 @@ const Home = props => {
   let rows = 0;
 
   const sortedBills = bills.sort((a, b) => {
-    a.billname.localeCompare(b.billname);
+    return a.billname.toLowerCase().localeCompare(b.billname.toLowerCase());
   });
-
-  console.log(sortedBills);
 
   // Destructures userid from login page
   const { id } = props.history.location.state;
@@ -97,7 +95,9 @@ const Home = props => {
         let billToUpdate = await bills.findIndex(
           bill => bill.id == data.bill.id
         );
-        bills[billToUpdate] = data.bill;
+        let newBillArray = [...bills];
+        newBillArray[billToUpdate] = data.bill;
+        setBills(newBillArray);
         break;
     }
   };

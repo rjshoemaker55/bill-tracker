@@ -28,19 +28,15 @@ const BillRow = props => {
     switch (field) {
       case 'billname':
         setNewBillName(e.target.value);
-        console.log(`newBillname ${newBillName}`);
         break;
       case 'category':
         setNewCategory(e.target.value);
-        console.log(`newCategory: ${newCategory}`);
         break;
       case 'amount':
         setNewAmount(Number(e.target.value));
-        console.log(`newAmount: ${newAmount}`);
         break;
       case 'duedate':
         setNewDueDate(Number(e.target.value));
-        console.log(`newDueDate: ${newDueDate}`);
         break;
     }
   };
@@ -49,7 +45,6 @@ const BillRow = props => {
     if (buttonType == 'table-delete-button') {
       deleteBill();
     } else {
-      console.log('handle click in BillRow.js');
       updateBill({
         variables: {
           id,
