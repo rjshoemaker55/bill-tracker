@@ -19,6 +19,7 @@ const Home = props => {
   const [newBillCategory, setNewBillCategory] = useState('');
   const [newBillAmount, setNewBillAmount] = useState('');
   const [newBillDueDate, setNewBillDueDate] = useState('');
+  const [updateType, setUpdateType] = useState('');
 
   let rows = 0;
 
@@ -37,42 +38,31 @@ const Home = props => {
     }
   });
 
+  // Gets bill data by id
+  const [findBill] = useLazyQuery(getBillQuery, {
+    onError: error => console.log(`getBill Error: ${error}`),
+    onCompleted: res => updateBillState(updateType, res)
+  });
+
   // Adds a bill, then calls findBill to update state
   const [addBill] = useMutation(addBillMutation, {
     onError: error => console.log(`addBill Error: ${error}`),
     onCompleted: res => {
-      const newBill = findBill({
+      setUpdateType('add');
+      findBill({
         variables: { billId: res.addBill.id }
       });
-      console.log(newBill);
-      setBills([...bills, newBill.bill]);
-      setNewBillName('');
-      setNewBillCategory('');
-      setNewBillDueDate('');
-      setNewBillAmount('');
     }
   });
 
-  // Gets new bill data form getBillQuery then updates state
-  const [findBill] = useLazyQuery(getBillQuery, {
-    onError: error => console.log(`getBill Error: ${error}`),
-    onCompleted: res => res
-    // {
-    //   setBills([...bills, res.bill]);
-    //   setNewBillName('');
-    //   setNewBillCategory('');
-    //   setNewBillDueDate('');
-    //   setNewBillAmount('');
-    // }
-  });
-
+  // Updates a bill
   const [updateBill] = useMutation(updateBillMutation, {
     onError: err => console.log(`updateBill error: ${err}`),
     onCompleted: res => {
-      const updatedBill = findBill({
+      setUpdateType('update');
+      findBill({
         variables: { billId: res.updateBill.id }
       });
-      console.log(updatedBill);
     }
   });
 
@@ -80,9 +70,31 @@ const Home = props => {
   const [deleteBill] = useMutation(deleteBillMutation, {
     onError: error => console.log(`deleteBill Error: ${error}`),
     onCompleted: res => {
-      setBills(bills.filter(bill => bill.id !== res.deleteBill.id));
+      setUpdateType('delete');
+      updateBillState('delete', res);
     }
   });
+
+  const updateBillState = async (updateType, data) => {
+    switch (updateType) {
+      case 'delete':
+        setBills(bills.filter(bill => bill.id !== data.deleteBill.id));
+        break;
+      case 'add':
+        setBills([...bills, data.bill]);
+        setNewBillName('');
+        setNewBillCategory('');
+        setNewBillDueDate('');
+        setNewBillAmount('');
+        break;
+      case 'update':
+        let billToUpdate = await bills.findIndex(
+          bill => bill.id == data.bill.id
+        );
+        bills[billToUpdate] = data.bill;
+        break;
+    }
+  };
 
   return loading ? (
     <>

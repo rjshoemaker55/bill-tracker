@@ -49,6 +49,7 @@ const BillRow = props => {
     if (buttonType == 'table-delete-button') {
       deleteBill();
     } else {
+      console.log('handle click in BillRow.js');
       updateBill({
         variables: {
           id,
@@ -58,6 +59,7 @@ const BillRow = props => {
           newDueDate
         }
       });
+      setButtonType('table-delete-button');
     }
   };
 
