@@ -161,18 +161,18 @@ const Home = props => {
                   onChange={e => setNewBillCategory(e.target.value)}
                 />
               </td>
-              <td>
+              <td className='centered'>
                 <input
-                  className='new-bill-field'
+                  className='new-bill-field centered'
                   value={newBillAmount}
                   type='number'
                   placeholder='Amount'
                   onChange={e => setNewBillAmount(parseInt(e.target.value))}
                 />
               </td>
-              <td>
+              <td className='centered'>
                 <input
-                  className='new-bill-field'
+                  className='new-bill-field centered'
                   value={newBillDueDate}
                   placeholder='Due Date'
                   type='number'

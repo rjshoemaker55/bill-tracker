@@ -41,7 +41,7 @@ const BillRow = props => {
     }
   };
 
-  const handleClick = () => {
+  const handleUpdate = () => {
     if (buttonType == 'table-delete-button') {
       deleteBill();
     } else {
@@ -56,6 +56,14 @@ const BillRow = props => {
       });
       setButtonType('table-delete-button');
     }
+  };
+
+  const handleRevert = () => {
+    setButtonType('table-delete-button');
+    setNewBillName(billname);
+    setNewAmount(amount);
+    setNewCategory(category);
+    setNewDueDate(duedate);
   };
 
   return (
@@ -83,6 +91,7 @@ const BillRow = props => {
           <input
             className='bill-item centered'
             value={newAmount}
+            type='number'
             onChange={e => editField(e, 'amount')}
           />
         </div>
@@ -91,13 +100,23 @@ const BillRow = props => {
         <input
           className='bill-item centered'
           value={newDueDate}
+          type='number'
           onChange={e => editField(e, 'duedate')}
         />
       </td>
       <td className='centered'>
-        <button id={buttonType} className='table-button' onClick={handleClick}>
+        <button id={buttonType} className='table-button' onClick={handleUpdate}>
           {buttonType == 'table-delete-button' ? 'X' : '✓'}
         </button>
+        {buttonType == 'table-update-button' && (
+          <button
+            id='table-revert-button'
+            className='table-button'
+            onClick={handleRevert}
+          >
+            ⟲
+          </button>
+        )}
       </td>
     </tr>
   );
