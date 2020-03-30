@@ -205,6 +205,8 @@ const Mutation = new GraphQLObjectType({
           .catch(err => console.log(err));
       }
     },
+
+    // Update bill
     updateBill: {
       type: BillType,
       args: {
@@ -215,6 +217,7 @@ const Mutation = new GraphQLObjectType({
         newDueDate: { type: GraphQLInt }
       },
       resolve(parent, args) {
+        console.log(args);
         return client
           .query(
             `

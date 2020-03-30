@@ -83,14 +83,22 @@ const addBillMutation = gql`
 
 // MUTATION: Update bill
 const updateBillMutation = gql`
-  mutation($id: Int!, $newBillName: String, $newCategory: String, newAmount: Int, newDueDate: Int) {
+  mutation(
+    $id: Int!
+    $newBillName: String
+    $newCategory: String
+    $newAmount: Int
+    $newDueDate: Int
+  ) {
     updateBill(
       id: $id
-      billname: $newBillName
-      category: $newCategory
-      amount: $newAmount
-      duedate: $newDueDate
-    )
+      newBillName: $newBillName
+      newCategory: $newCategory
+      newAmount: $newAmount
+      newDueDate: $newDueDate
+    ) {
+      id
+    }
   }
 `;
 

@@ -5,7 +5,8 @@ import {
   deleteBillMutation,
   getUserQuery,
   addBillMutation,
-  getBillQuery
+  getBillQuery,
+  updateBillMutation
 } from '../../queries/queries';
 import Navbar from '../../components/Navbar/Navbar';
 import BillRow from '../../components/BillRow/BillRow';
@@ -43,18 +44,35 @@ const Home = props => {
       const newBill = findBill({
         variables: { billId: res.addBill.id }
       });
+      console.log(newBill);
+      setBills([...bills, newBill.bill]);
+      setNewBillName('');
+      setNewBillCategory('');
+      setNewBillDueDate('');
+      setNewBillAmount('');
     }
   });
 
   // Gets new bill data form getBillQuery then updates state
   const [findBill] = useLazyQuery(getBillQuery, {
-    onError: error => console.log(`getBillQuery Error: ${error}`),
+    onError: error => console.log(`getBill Error: ${error}`),
+    onCompleted: res => res
+    // {
+    //   setBills([...bills, res.bill]);
+    //   setNewBillName('');
+    //   setNewBillCategory('');
+    //   setNewBillDueDate('');
+    //   setNewBillAmount('');
+    // }
+  });
+
+  const [updateBill] = useMutation(updateBillMutation, {
+    onError: err => console.log(`updateBill error: ${err}`),
     onCompleted: res => {
-      setBills([...bills, res.bill]);
-      setNewBillName('');
-      setNewBillCategory('');
-      setNewBillDueDate('');
-      setNewBillAmount('');
+      const updatedBill = findBill({
+        variables: { billId: res.updateBill.id }
+      });
+      console.log(updatedBill);
     }
   });
 
@@ -98,9 +116,10 @@ const Home = props => {
                     amount={bill.amount}
                     category={bill.category}
                     duedate={bill.duedate}
-                    onClick={() => {
+                    deleteBill={() => {
                       deleteBill({ variables: { id: bill.id } });
                     }}
+                    updateBill={updateBill}
                   />
                 );
               })}

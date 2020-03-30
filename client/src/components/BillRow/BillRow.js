@@ -5,7 +5,16 @@ import { updateBillMutation } from '../../queries/queries';
 import './BillRow.css';
 
 const BillRow = props => {
-  const { id, className, billname, amount, category, duedate, onClick } = props;
+  const {
+    id,
+    className,
+    billname,
+    amount,
+    category,
+    duedate,
+    deleteBill,
+    updateBill
+  } = props;
 
   const [newBillName, setNewBillName] = useState(billname);
   const [newAmount, setNewAmount] = useState(amount);
@@ -19,24 +28,38 @@ const BillRow = props => {
     switch (field) {
       case 'billname':
         setNewBillName(e.target.value);
+        console.log(`newBillname ${newBillName}`);
         break;
       case 'category':
         setNewCategory(e.target.value);
+        console.log(`newCategory: ${newCategory}`);
         break;
       case 'amount':
-        setNewAmount(e.target.value);
+        setNewAmount(Number(e.target.value));
+        console.log(`newAmount: ${newAmount}`);
         break;
       case 'duedate':
-        setNewDueDate(e.target.value);
+        setNewDueDate(Number(e.target.value));
+        console.log(`newDueDate: ${newDueDate}`);
         break;
     }
-    setNewAmount(e.target.value);
   };
 
-  const [updateBill] = useMutation(updateBillMutation, {
-    onError: err => console.log(err),
-    onCompleted: res => console.log(res)
-  });
+  const handleClick = () => {
+    if (buttonType == 'table-delete-button') {
+      deleteBill();
+    } else {
+      updateBill({
+        variables: {
+          id,
+          newBillName,
+          newCategory,
+          newAmount,
+          newDueDate
+        }
+      });
+    }
+  };
 
   return (
     <tr className={className}>
@@ -75,24 +98,7 @@ const BillRow = props => {
         />
       </td>
       <td className='centered'>
-        <button
-          id={buttonType}
-          className='table-button'
-          nClick={
-            buttonType == 'table-delete-button'
-              ? onClick
-              : id =>
-                  updateBill({
-                    variables: {
-                      id,
-                      newBillName,
-                      newCategory,
-                      newAmount,
-                      newDueDate
-                    }
-                  })
-          }
-        >
+        <button id={buttonType} className='table-button' onClick={handleClick}>
           {buttonType == 'table-delete-button' ? 'X' : '✓'}
         </button>
       </td>
