@@ -23,7 +23,7 @@ const Home = props => {
 
   let rows = 0;
 
-  const sortedBills = bills.sort((a, b) => {
+  let sortedBills = bills.sort((a, b) => {
     return a.billname.toLowerCase().localeCompare(b.billname.toLowerCase());
   });
 
@@ -144,7 +144,7 @@ const Home = props => {
                 );
               })}
 
-            <tr>
+            <tr id='new-bill-row'>
               <td>
                 <input
                   className='new-bill-field'

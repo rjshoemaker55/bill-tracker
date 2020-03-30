@@ -39,10 +39,12 @@
 
 #table-delete-button:hover {
   background: rgba(var(--red), 1);
+  color: white;
 }
 
 #table-update-button:hover {
   background: rgba(var(--yellow), 1);
+  color: white;
 }
 
 #table-revert-button {
@@ -53,4 +55,5 @@
 
 #table-revert-button:hover {
   background: rgba(85, 26, 139, 1);
+  color: white;
 }

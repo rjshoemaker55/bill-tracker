@@ -8,13 +8,18 @@ const Login = props => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
+  const [errorMsg, setErrorMsg] = useState(false);
 
   const [loginUser] = useLazyQuery(loginQuery, {
     variables: {
       username,
       password
     },
+    onError: err => {
+      return setErrorMsg(true);
+    },
     onCompleted: data => {
+      setErrorMsg(false);
       props.history.push({
         pathname: '/home',
         state: data.loginUser
@@ -42,6 +47,7 @@ const Login = props => {
         <div id='login-header'>Bill Keeper.</div>
         <div id='login-subheader'>Login or Register:</div>
       </div>
+      {errorMsg && <div id='login-error'>Incorrect username or password.</div>}
       {!login && (
         <input
           value={name}

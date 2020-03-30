@@ -141,7 +141,7 @@ const RootQuery = new GraphQLObjectType({
           .query(`SELECT * FROM users WHERE username = '${username}'`)
           .then(res => {
             if (res.rows[0].upassword !== password) {
-              return console.log('Incorrect username or password.'); // TODO: Add error handling for wrong username or password
+              return new Error('Not authenticated.');
             } else {
               return res.rows[0];
             }
