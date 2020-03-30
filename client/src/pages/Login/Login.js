@@ -10,13 +10,13 @@ const Login = props => {
   const [name, setName] = useState('');
   const [errorMsg, setErrorMsg] = useState(false);
 
+  console.log(username, password);
+
   const [loginUser] = useLazyQuery(loginQuery, {
-    variables: {
-      username,
-      password
-    },
     onError: err => {
-      return setErrorMsg(true);
+      setUsername('');
+      setPassword('');
+      setErrorMsg(true);
     },
     onCompleted: data => {
       setErrorMsg(false);
@@ -28,11 +28,6 @@ const Login = props => {
   });
 
   const [registerUser] = useMutation(addUserMutation, {
-    variables: {
-      name: name,
-      username: username,
-      password: password
-    },
     onCompleted: data => {
       props.history.push({
         pathname: '/home',
@@ -77,7 +72,20 @@ const Login = props => {
       <button
         className='register-login-button'
         onClick={e => {
-          login ? loginUser() : registerUser();
+          login
+            ? loginUser({
+                variables: {
+                  username,
+                  password
+                }
+              })
+            : registerUser({
+                variables: {
+                  name: name,
+                  username: username,
+                  password: password
+                }
+              });
         }}
       >
         {login ? 'Login' : 'Register'}
