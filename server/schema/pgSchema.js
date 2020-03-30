@@ -205,6 +205,31 @@ const Mutation = new GraphQLObjectType({
           .catch(err => console.log(err));
       }
     },
+    updateBill: {
+      type: BillType,
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLInt) },
+        newBillName: { type: GraphQLString },
+        newCategory: { type: GraphQLString },
+        newAmount: { type: GraphQLInt },
+        newDueDate: { type: GraphQLInt }
+      },
+      resolve(parent, args) {
+        return client
+          .query(
+            `
+              UPDATE bills SET 
+                billname = '${args.newBillName}',
+                category = '${args.newCategory}',
+                amount = '${args.newAmount}',
+                duedate = '${args.newDueDate}'
+              WHERE id = ${args.id}
+              RETURNING id
+            `
+          )
+          .then(res => res.rows[0]);
+      }
+    },
     // Delete bill
     deleteBill: {
       type: BillType,

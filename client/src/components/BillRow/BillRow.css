@@ -6,10 +6,27 @@
   background: rgb(var(--pink), 0.4);
 }
 
+.dollar {
+  display: inline-block;
+  position: relative;
+}
+
+.dollar input {
+  padding-left: 15px;
+}
+
+.dollar:before {
+  position: absolute;
+  content: '$';
+  left: 5px;
+  top: 2px;
+}
+
 .bill-item {
   font-size: 30px;
   background: transparent;
   border: none;
+  display: inline-block;
 }
 
 .table-button {

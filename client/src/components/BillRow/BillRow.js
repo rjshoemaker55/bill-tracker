@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useMutation } from '@apollo/react-hooks';
+import { updateBillMutation } from '../../queries/queries';
 
 import './BillRow.css';
 
@@ -31,8 +33,13 @@ const BillRow = props => {
     setNewAmount(e.target.value);
   };
 
+  const [updateBill] = useMutation(updateBillMutation, {
+    onError: err => console.log(err),
+    onCompleted: res => console.log(res)
+  });
+
   return (
-    <tr key={id} className={className}>
+    <tr className={className}>
       <td>
         <input
           className='bill-item'
@@ -52,11 +59,13 @@ const BillRow = props => {
         )}
       </td>
       <td>
-        <input
-          className='bill-item centered'
-          value={newAmount}
-          onChange={e => editField(e, 'amount')}
-        />
+        <div className='dollar'>
+          <input
+            className='bill-item centered'
+            value={newAmount}
+            onChange={e => editField(e, 'amount')}
+          />
+        </div>
       </td>
       <td>
         <input
@@ -66,7 +75,24 @@ const BillRow = props => {
         />
       </td>
       <td className='centered'>
-        <button id={buttonType} className='table-button' onClick={onClick}>
+        <button
+          id={buttonType}
+          className='table-button'
+          nClick={
+            buttonType == 'table-delete-button'
+              ? onClick
+              : id =>
+                  updateBill({
+                    variables: {
+                      id,
+                      newBillName,
+                      newCategory,
+                      newAmount,
+                      newDueDate
+                    }
+                  })
+          }
+        >
           {buttonType == 'table-delete-button' ? 'X' : '✓'}
         </button>
       </td>

@@ -91,6 +91,7 @@ const Home = props => {
                 rows++;
                 return (
                   <BillRow
+                    key={bill.id}
                     id={bill.id}
                     className={!(rows % 2) ? 'green-row' : 'reg-row'}
                     billname={bill.billname}

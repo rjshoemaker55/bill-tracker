@@ -81,6 +81,19 @@ const addBillMutation = gql`
   }
 `;
 
+// MUTATION: Update bill
+const updateBillMutation = gql`
+  mutation($id: Int!, $newBillName: String, $newCategory: String, newAmount: Int, newDueDate: Int) {
+    updateBill(
+      id: $id
+      billname: $newBillName
+      category: $newCategory
+      amount: $newAmount
+      duedate: $newDueDate
+    )
+  }
+`;
+
 // MUTATION: Delete bill
 const deleteBillMutation = gql`
   mutation($id: Int!) {
@@ -97,5 +110,6 @@ export {
   getUserQuery,
   getBillQuery,
   deleteBillMutation,
+  updateBillMutation,
   addBillMutation
 };
