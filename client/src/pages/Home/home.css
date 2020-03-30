@@ -1,5 +1,13 @@
+#instructions {
+  text-align: center;
+  color: white;
+  font-size: 35px;
+  font-weight: bold;
+  padding-top: 25px;
+}
+
 #bill-table {
-  margin-top: 20px;
+  margin-top: 10px;
   border-collapse: collapse;
 }
 

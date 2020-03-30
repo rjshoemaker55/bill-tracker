@@ -79,6 +79,7 @@ const Home = props => {
     }
   });
 
+  // Takes the update type and data, and updates the client state
   const updateBillState = async (updateType, data) => {
     switch (updateType) {
       case 'delete':
@@ -111,6 +112,7 @@ const Home = props => {
     <>
       <Navbar uname={user.uname} />
       <div id='home-wrapper'>
+        <div id='instructions'>Click on bill data to edit.</div>
         <table align='center' id='bill-table'>
           <thead>
             <tr id='table-header-row'>
