@@ -23,6 +23,12 @@ const Home = props => {
 
   let rows = 0;
 
+  const sortedBills = bills.sort((a, b) => {
+    a.billname.localeCompare(b.billname);
+  });
+
+  console.log(sortedBills);
+
   // Destructures userid from login page
   const { id } = props.history.location.state;
 
@@ -117,7 +123,7 @@ const Home = props => {
           </thead>
           <tbody>
             {!loading &&
-              bills.map(bill => {
+              sortedBills.map(bill => {
                 rows++;
                 return (
                   <BillRow
