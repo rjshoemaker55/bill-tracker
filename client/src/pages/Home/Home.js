@@ -114,94 +114,99 @@ const Home = props => {
       <Navbar uname={user.uname} />
       <div id='home-wrapper'>
         <div id='instructions'>Click on bill data to edit.</div>
-        <table align='center' id='bill-table'>
-          <thead>
-            <tr id='table-header-row'>
-              <th>Bill Name</th>
-              <th>Category</th>
-              <th className='centered'>Amount</th>
-              <th className='centered'>Due Date</th>
-              <th id='table-delete-column'></th>
-            </tr>
-          </thead>
-          <tbody>
-            {!loading &&
-              sortedBills.map(bill => {
-                rows++;
-                return (
-                  <BillRow
-                    key={bill.id}
-                    id={bill.id}
-                    className={!(rows % 2) ? 'green-row' : 'reg-row'}
-                    billname={bill.billname}
-                    amount={bill.amount}
-                    category={bill.category}
-                    duedate={bill.duedate}
-                    deleteBill={() => {
-                      deleteBill({ variables: { id: bill.id } });
-                    }}
-                    updateBill={updateBill}
-                  />
-                );
-              })}
+        <div id='scroll-instructions'>
+          Scroll to see all data on smaller screens.
+        </div>
+        <div id='table-scroll'>
+          <table align='center' id='bill-table'>
+            <thead>
+              <tr id='table-header-row'>
+                <th>Bill Name</th>
+                <th>Category</th>
+                <th className='centered'>Amount</th>
+                <th className='centered'>Due Date</th>
+                <th id='table-delete-column'></th>
+              </tr>
+            </thead>
+            <tbody>
+              {!loading &&
+                sortedBills.map(bill => {
+                  rows++;
+                  return (
+                    <BillRow
+                      key={bill.id}
+                      id={bill.id}
+                      className={!(rows % 2) ? 'green-row' : 'reg-row'}
+                      billname={bill.billname}
+                      amount={bill.amount}
+                      category={bill.category}
+                      duedate={bill.duedate}
+                      deleteBill={() => {
+                        deleteBill({ variables: { id: bill.id } });
+                      }}
+                      updateBill={updateBill}
+                    />
+                  );
+                })}
 
-            <tr id='new-bill-row'>
-              <td>
-                <input
-                  className='new-bill-field'
-                  value={newBillName}
-                  placeholder='New Bill'
-                  onChange={e => setNewBillName(e.target.value)}
-                />
-              </td>
-              <td>
-                <input
-                  className='new-bill-field'
-                  value={newBillCategory}
-                  placeholder='Category'
-                  onChange={e => setNewBillCategory(e.target.value)}
-                />
-              </td>
-              <td className='centered'>
-                <input
-                  className='new-bill-field centered'
-                  value={newBillAmount}
-                  type='number'
-                  placeholder='Amount'
-                  onChange={e => setNewBillAmount(parseInt(e.target.value))}
-                />
-              </td>
-              <td className='centered'>
-                <input
-                  className='new-bill-field centered'
-                  value={newBillDueDate}
-                  placeholder='Due Date'
-                  type='number'
-                  onChange={e => setNewBillDueDate(parseInt(e.target.value))}
-                />
-              </td>
-              <td className='centered'>
-                <button
-                  id='add-bill-button'
-                  className='table-button'
-                  onClick={() => {
-                    addBill({
-                      variables: {
-                        billname: newBillName,
-                        amount: newBillAmount,
-                        category: newBillCategory,
-                        duedate: newBillDueDate,
-                        user: id
-                      }
-                    });
-                  }}
-                >
-                  +
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+              <tr id='new-bill-row'>
+                <td>
+                  <input
+                    className='new-bill-field'
+                    value={newBillName}
+                    placeholder='New Bill'
+                    onChange={e => setNewBillName(e.target.value)}
+                  />
+                </td>
+                <td>
+                  <input
+                    className='new-bill-field'
+                    value={newBillCategory}
+                    placeholder='Category'
+                    onChange={e => setNewBillCategory(e.target.value)}
+                  />
+                </td>
+                <td className='centered'>
+                  <input
+                    className='new-bill-field centered'
+                    value={newBillAmount}
+                    type='number'
+                    placeholder='Amount'
+                    onChange={e => setNewBillAmount(parseInt(e.target.value))}
+                  />
+                </td>
+                <td className='centered'>
+                  <input
+                    className='new-bill-field centered'
+                    value={newBillDueDate}
+                    placeholder='Due Date'
+                    type='number'
+                    onChange={e => setNewBillDueDate(parseInt(e.target.value))}
+                  />
+                </td>
+                <td className='centered'>
+                  <button
+                    id='add-bill-button'
+                    className='table-button'
+                    onClick={() => {
+                      addBill({
+                        variables: {
+                          billname: newBillName,
+                          amount: newBillAmount,
+                          category: newBillCategory,
+                          duedate: newBillDueDate,
+                          user: id
+                        }
+                      });
+                    }}
+                  >
+                    +
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </>
   );

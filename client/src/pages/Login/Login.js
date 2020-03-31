@@ -73,7 +73,7 @@ const Login = props => {
         required
       />
       <button
-        className='register-login-button'
+        id='register-login-button'
         onClick={e => {
           login
             ? loginUser({
@@ -93,7 +93,7 @@ const Login = props => {
       >
         {login ? 'Login' : 'Register'}
       </button>
-      <div className='register-login-switch' onClick={() => setLogin(!login)}>
+      <div id='register-login-switch' onClick={() => setLogin(!login)}>
         {login ? 'Register' : 'Login'}
       </div>
     </div>

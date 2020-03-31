@@ -11,9 +11,16 @@
 }
 
 #bill-table {
-  margin-top: 5px;
+  margin: auto;
   border-collapse: collapse;
   border: 2px rgba(255, 255, 255, 0.5) solid;
+}
+
+#scroll-instructions {
+  display: none;
+  color: rgba(var(--dark-white));
+  margin: auto;
+  font-size: 20px;
 }
 
 #table-header-row {
@@ -83,4 +90,15 @@ td {
 #add-bill-button:hover {
   background: rgba(var(--yellow), 0.8);
   color: white;
+}
+
+@media only screen and (max-width: 1024px) {
+  #table-scroll {
+    overflow-x: scroll;
+    padding: 10px;
+  }
+
+  #scroll-instructions {
+    display: table;
+  }
 }

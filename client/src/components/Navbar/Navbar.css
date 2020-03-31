@@ -3,6 +3,7 @@
   display: flex;
   flex: 1;
   background-color: rgba(0, 0, 0, 0.767);
+  padding: 10px 10px;
 }
 
 .navbar-item {
@@ -12,7 +13,6 @@
 
 #navbar-left-display {
   flex: 1;
-  margin-left: 20px;
 }
 
 #navbar-center-display {
@@ -22,12 +22,16 @@
 #navbar-right-display {
   flex: 1;
   text-align: right;
-  margin-right: 20px;
 }
 
 #navbar-title {
   font-size: 35px;
   font-weight: bold;
+  background: rgba(var(--yellow), 0.2);
+  display: table;
+  margin: 0px auto;
+  padding: 0px 10px;
+  border-radius: 5px;
 }
 
 #logged-in-display {
@@ -36,11 +40,11 @@
 }
 
 #logout-button {
-  margin-top: 9px;
   padding: 0px 10px;
   font-size: 25px;
   background: rgba(95, 95, 95, 0.6);
-  display: inline-block;
+  display: table;
+  margin: 9px 0px 0px auto;
   font-weight: bold;
   border-radius: 5px;
   transition-duration: 0.3s;
@@ -56,4 +60,29 @@
 
 #logout-button:hover #logout-text {
   color: black;
+}
+
+@media only screen and (max-width: 600px) {
+  #navbar-title {
+    font-size: 25px;
+    margin: 0;
+  }
+
+  #logged-in-display {
+    display: none;
+  }
+
+  #navbar-left-display {
+    flex: 0;
+  }
+
+  #navbar-center-display {
+    text-align: left;
+  }
+
+  #logout-button {
+    margin-right: 0px;
+    margin-top: 5px;
+    font-size: 20px;
+  }
 }

@@ -5,13 +5,17 @@
 
 #login-header {
   font-size: 100px;
-  color: rgba(201, 201, 201, 0.9);
-  padding: 40px 0px;
+  color: rgba(255, 255, 255, 1);
+  padding: 15px 10px 3px 10px;
   line-height: 1;
+  background: rgba(var(--yellow), 0.3);
+  display: table;
+  border-radius: 5px;
+  margin-left: -10px;
 }
 
 #login-subheader {
-  color: white;
+  color: rgba(var(--dark-white));
   font-size: 50px;
 }
 
@@ -48,7 +52,7 @@
   margin-left: 50px;
 }
 
-.register-login-button {
+#register-login-button {
   font-size: 30px;
   background: rgba(var(--pink), 0.5);
   border-radius: 5px;
@@ -60,14 +64,14 @@
   color: rgb(212, 212, 212);
 }
 
-.register-login-button:hover {
+#register-login-button:hover {
   background: transparent;
   cursor: pointer;
   color: white;
   transform: scale(1.05);
 }
 
-.register-login-switch {
+#register-login-switch {
   font-size: 25px;
   font-weight: bold;
   margin-top: 10px;
@@ -76,8 +80,64 @@
   color: rgb(194, 194, 194);
 }
 
-.register-login-switch:hover {
+#register-login-switch:hover {
   cursor: pointer;
   transform: scale(1.1);
   color: white;
 }
+
+@media only screen and (max-width: 600px) {
+  #login-header {
+    font-size: 50px;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  #login-wrapper {
+    padding: 0px 0px 0px 0px;
+    display: table;
+    margin: auto;
+  }
+  #login-header {
+    border-radius: 0px;
+    margin-top: 200px;
+    margin-left: 0px;
+  }
+
+  #login-subheader {
+    font-size: 35px;
+    margin-top: 40px;
+    display: table;
+  }
+
+  .login-field {
+    display: table;
+    margin-top: 10px;
+  }
+
+  .login-field + .login-field {
+    margin-left: 0px;
+    margin-top: 20px;
+  }
+
+  #register-login-button {
+    margin-top: 20px;
+    margin-left: 0px;
+  }
+
+  #register-login-switch {
+    font-size: 23px;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+/* @media only screen and (min-width: 600px) {...} */
+
+/* Medium devices (landscape tablets, 768px and up) */
+/* @media only screen and (min-width: 768px) {...} */
+
+/* Large devices (laptops/desktops, 992px and up) */
+/* @media only screen and (min-width: 992px) {...} */
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+/* @media only screen and (min-width: 1200px) {...} */
