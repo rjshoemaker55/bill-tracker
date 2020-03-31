@@ -14,9 +14,9 @@
  4. Navigate to `server > schema > pgSchema.js`
  5. Edit the PostgreSQL client information to match your own (username, password, database, etc.)
  ![Edit this](https://i.ibb.co/xhdv3Rg/Screen-Shot-2020-03-24-at-10-03-37-PM.png)
- 6. Save the changes, then head back to the terminal and run `yarn server` or `npm run server` to spin up the server.
+ 6. Save the changes, then head back to the terminal and run `yarn start` or `npm run start` to spin up the server.
 6. In a separate terminal, run `yarn client`or `npm run client`to start the React client.
-7. Navigate to [http://localhost:3000](http://localhost:3000) to open the app!
+7. Navigate to [http://localhost:3000](http://localhost:3000) to open the dev client.
 
 ## What's to come:
 
