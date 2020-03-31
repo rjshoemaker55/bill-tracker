@@ -10,8 +10,6 @@ const Login = props => {
   const [name, setName] = useState('');
   const [errorMsg, setErrorMsg] = useState(false);
 
-  console.log(username, password);
-
   const [loginUser] = useLazyQuery(loginQuery, {
     onError: err => {
       setUsername('');
