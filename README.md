@@ -22,9 +22,10 @@
 
  - Fix suffixes for due dates
  - Real authentication
- - Mobile responsiveness
+ - Add mobile responsiveness for table (collapsible columns?)
  - Login validation
  - Update feature for bills
  - Calendar selection for due dates
  - Text/email notifications
  - User settings
+ 
