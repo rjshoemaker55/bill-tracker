@@ -1,5 +1,5 @@
 .green-row {
-  background: rgb(var(--blue), 0.4);
+  background: rgb(var(--dark-gray), 0.7);
 }
 
 .reg-row {
@@ -27,10 +27,17 @@
   background: transparent;
   border: none;
   display: inline-block;
+  color: rgba(var(--dark-white), 1);
+  transition-duration: 0.5s;
+}
+
+.bill-item:focus {
+  color: white;
+  border-bottom: white 3px solid;
 }
 
 #table-delete-button {
-  background: rgba(var(--red), 0.7);
+  background: rgba(150, 22, 22, 0.7);
 }
 
 #table-update-button {
@@ -38,7 +45,7 @@
 }
 
 #table-delete-button:hover {
-  background: rgba(var(--red), 1);
+  background: rgba(150, 22, 22, 1);
   color: white;
 }
 

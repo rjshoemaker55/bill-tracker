@@ -51,6 +51,7 @@ const Login = props => {
           placeholder='Name'
           className='login-field'
           autoComplete='new-password'
+          required
         />
       )}
       <input
@@ -60,6 +61,7 @@ const Login = props => {
         placeholder='Username'
         className='login-field'
         autoComplete='new-password'
+        required
       />
       <input
         value={password}
@@ -68,6 +70,7 @@ const Login = props => {
         placeholder='Password'
         className='login-field'
         autoComplete='new-password'
+        required
       />
       <button
         className='register-login-button'

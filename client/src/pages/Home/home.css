@@ -1,9 +1,13 @@
 #instructions {
   text-align: center;
-  color: rgb(var(--dark-gray));
+  color: rgb(189, 189, 189);
   font-size: 35px;
   font-weight: bold;
   padding-top: 35px;
+}
+
+#home-wrapper {
+  height: 100%;
 }
 
 #bill-table {
@@ -29,10 +33,11 @@ td {
   padding: 5px;
   border: none;
   padding: 10px 20px;
+  color: rgb(187, 186, 186);
 }
 
 #new-bill-row {
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(104, 104, 104, 0.5);
 }
 
 #table-delete-column {
@@ -51,6 +56,11 @@ td {
   background: transparent;
   font-size: 20px;
   font-weight: bold;
+  color: rgba(var(--yellow), 1);
+}
+
+.new-bill-field::placeholder {
+  color: rgb(194, 194, 194);
 }
 
 .table-button {
@@ -67,10 +77,10 @@ td {
 }
 
 #add-bill-button {
-  background: rgba(var(--green), 0.7);
+  background: rgba(var(--yellow), 0.5);
 }
 
 #add-bill-button:hover {
-  background: rgba(var(--green), 1);
+  background: rgba(var(--yellow), 0.8);
   color: white;
 }

@@ -1,15 +1,18 @@
 :root {
-  --green: 190, 98, 31;
+  --green: 0, 99, 104;
   --pink: 254, 111, 97;
   --red: 163, 39, 89;
   --yellow: 214, 215, 24;
   --dark-gray: 25, 25, 25;
+  --dark-purple: 39, 4, 17;
+  --dark-white: 194, 194, 194;
 }
 
 html,
 body {
   margin: 0;
-  background-color: rgb(var(--red));
+  background-color: rgb(var(--dark-purple));
+  height: 100%;
 }
 
 body {
@@ -17,19 +20,29 @@ body {
   overflow-x: hidden;
 }
 
+/* Change the white to any color ;) */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border: none;
+}
+
 ::placeholder {
   /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: rgba(var(--dark-gray), 0.8);
+  color: rgba(var(--yellow), 0.7);
 
   opacity: 0.8; /* Firefox */
 }
 
 :-ms-input-placeholder {
   /* Internet Explorer 10-11 */
-  color: rgba(var(--dark-gray), 0.8);
+  color: rgba(var(--yellow), 0.7);
 }
 
 ::-ms-input-placeholder {
   /* Microsoft Edge */
-  color: rgba(var(--dark-gray), 0.8);
+  color: rgba(var(--yellow), 0.7);
 }

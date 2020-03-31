@@ -5,7 +5,7 @@
 
 #login-header {
   font-size: 100px;
-  color: rgba(var(--dark-gray), 0.9);
+  color: rgba(201, 201, 201, 0.9);
   padding: 40px 0px;
   line-height: 1;
 }
@@ -27,12 +27,21 @@
   border-top: none;
   border-left: none;
   border-right: none;
-  border-bottom: 5px solid rgba(var(--dark-gray), 0.8);
+  border-bottom: 5px solid rgba(var(--yellow), 0.5);
   background: transparent;
   font-size: 25px;
   font-weight: bold;
   letter-spacing: 1.5px;
-  color: rgb(var(--dark-gray));
+  color: rgb(var(--yellow));
+  transition-duration: 0.5s;
+}
+
+.login-field:valid {
+  border-bottom: 5px solid rgba(var(--yellow), 1);
+}
+
+.login-field:focus {
+  border-bottom: 5px solid rgba(var(--yellow), 1);
 }
 
 .login-field + .login-field {
@@ -41,17 +50,18 @@
 
 .register-login-button {
   font-size: 30px;
-  background: rgba(var(--green), 0.8);
+  background: rgba(var(--pink), 0.5);
   border-radius: 5px;
   font-weight: bold;
   padding: 5px 10px;
   border: none;
   margin-left: 30px;
   transition-duration: 0.3s;
+  color: rgb(212, 212, 212);
 }
 
 .register-login-button:hover {
-  background: rgba(var(--green), 1);
+  background: transparent;
   cursor: pointer;
   color: white;
   transform: scale(1.05);
@@ -63,6 +73,7 @@
   margin-top: 10px;
   display: table;
   transition-duration: 0.3s;
+  color: rgb(194, 194, 194);
 }
 
 .register-login-switch:hover {
