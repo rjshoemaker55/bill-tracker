@@ -2,11 +2,12 @@
   position: relative;
   display: flex;
   flex: 1;
-  background: rgba(var(--green));
+  background-color: rgba(0, 0, 0, 0.767);
 }
 
 .navbar-item {
   display: inline-block;
+  color: white;
 }
 
 #navbar-left-display {
@@ -38,17 +39,21 @@
   margin-top: 9px;
   padding: 0px 10px;
   font-size: 25px;
-  background: rgba(var(--yellow), 0.7);
+  background: rgba(95, 95, 95, 0.6);
   display: inline-block;
   font-weight: bold;
   border-radius: 5px;
-  color: rgb(85, 26, 139);
   transition-duration: 0.3s;
 }
 #logout-button:hover {
-  background: rgba(var(--yellow), 1);
+  background: rgb(163, 163, 163);
 }
 
 #logout-text {
   text-decoration: none;
+  color: rgba(206, 206, 206, 0.664);
+}
+
+#logout-button:hover #logout-text {
+  color: black;
 }

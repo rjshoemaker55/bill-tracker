@@ -1,13 +1,13 @@
 #instructions {
   text-align: center;
-  color: white;
+  color: rgb(var(--dark-gray));
   font-size: 35px;
   font-weight: bold;
   padding-top: 35px;
 }
 
 #bill-table {
-  margin: 5px 10px 10px 0px;
+  margin-top: 5px;
   border-collapse: collapse;
   border: 2px rgba(255, 255, 255, 0.5) solid;
 }
@@ -15,7 +15,7 @@
 #table-header-row {
   font-size: 40px;
   text-align: left;
-  background: rgba(var(--yellow), 1);
+  background: rgba(var(--yellow), 0.6);
   border-radius: 10px;
 }
 

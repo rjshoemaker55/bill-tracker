@@ -41,7 +41,7 @@
 
 .register-login-button {
   font-size: 30px;
-  background: rgba(var(--green), 0.7);
+  background: rgba(var(--green), 0.8);
   border-radius: 5px;
   font-weight: bold;
   padding: 5px 10px;
@@ -53,6 +53,8 @@
 .register-login-button:hover {
   background: rgba(var(--green), 1);
   cursor: pointer;
+  color: white;
+  transform: scale(1.05);
 }
 
 .register-login-switch {
@@ -66,4 +68,5 @@
 .register-login-switch:hover {
   cursor: pointer;
   transform: scale(1.1);
+  color: white;
 }
