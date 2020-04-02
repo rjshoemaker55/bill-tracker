@@ -14,9 +14,10 @@ const {
 const client = new Client({
   user: 'postgres',
   password: 'postgres',
-  host: 'localhost',
+  host: 'bill-keeper.c9dgdo7cxi7b.us-east-2.rds.amazonaws.com',
   port: 5432,
-  database: 'bill-tracker'
+  database: 'bill-keeper',
+  timeout: 600000
 });
 
 client

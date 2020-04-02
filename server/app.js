@@ -4,6 +4,7 @@ const pgSchema = require('./schema/pgSchema.js');
 const cors = require('cors');
 const path = require('path');
 
+const { Client } = require('pg');
 const app = express();
 const PORT = process.env.PORT || 4000;
 
