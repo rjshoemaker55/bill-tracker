@@ -1,5 +1,7 @@
 const graphql = require('graphql');
 const { Client } = require('pg');
+const connectionString =
+  'postgres://lqcwqetk:e5mmNVn-0TyTr491EOLtaitxnERvK11E@drona.db.elephantsql.com:5432/lqcwqetk';
 
 const {
   GraphQLObjectType,
@@ -12,12 +14,13 @@ const {
 
 // Initialize Postgres database
 const client = new Client({
-  user: 'postgres',
-  password: 'postgres',
-  host: 'localhost',
-  port: 5432,
-  database: 'bill-tracker',
-  timeout: 600000
+  connectionString
+  // user: 'postgres',
+  // password: 'postgres',
+  // host: 'localhost',
+  // port: 5432,
+  // database: 'bill-tracker',
+  // timeout: 600000
 });
 
 client
