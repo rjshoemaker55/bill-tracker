@@ -43,7 +43,6 @@ const BillType = new GraphQLObjectType({
         return client
           .query(`SELECT * FROM users WHERE id = ${parent.user_id}`)
           .then(res => {
-            console.log('BillType Users Resolver');
             return res.rows[0];
           })
           .catch(err => console.log(err));
@@ -65,13 +64,6 @@ const UserType = new GraphQLObjectType({
         return client
           .query(`SELECT * FROM bills WHERE user_id = ${parent.id}`)
           .then(res => {
-            console.log(
-              `select bills from userid: ${parent.id}: ${JSON.stringify(
-                res,
-                null,
-                2
-              )}`
-            );
             return res.rows;
           });
       }
