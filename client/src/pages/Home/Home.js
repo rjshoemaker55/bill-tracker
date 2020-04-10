@@ -179,7 +179,7 @@ const Home = props => {
                   <input
                     className='new-bill-field centered'
                     value={newBillDueDate}
-                    placeholder='Due Date'
+                    placeholder='Day of Month'
                     type='number'
                     onChange={e => setNewBillDueDate(parseInt(e.target.value))}
                   />
