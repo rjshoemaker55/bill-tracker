@@ -7,6 +7,10 @@
 ### Bill Keeper offers a more simplistic approach to tracking finances. This app is designed for people who don't need complex functionality that others offer.
 
 ## Get Started
+
+### Visit the Bill Keeper deployed site.
+https://bill-keeper-rjs.herokuapp.com/
+
 ### To run Bill Keeper on your machine, follow these steps (PostgreSQL must be installed): 
  1. Clone the repo: `git clone git@github.com:rjshoemaker55/bill-tracker.git`
  2. Install the dependencies using the package manager of your choice.
