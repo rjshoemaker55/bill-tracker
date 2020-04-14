@@ -20,6 +20,7 @@ const BillRow = props => {
   const [newAmount, setNewAmount] = useState(amount);
   const [newCategory, setNewCategory] = useState(category);
   const [newDueDate, setNewDueDate] = useState(duedate);
+  const [suffixDueDate, setSuffixDueDate] = useState(newDueDate);
   const [buttonType, setButtonType] = useState('table-delete-button');
 
   const editField = (e, field) => {
@@ -64,6 +65,23 @@ const BillRow = props => {
     setNewAmount(amount);
     setNewCategory(category);
     setNewDueDate(duedate);
+  };
+
+  const addSuffix = () => {
+    setSuffixDueDate(
+      `
+      ${newDueDate}
+      ${
+        newDueDate[newDueDate.length - 1] == 1
+          ? 'st'
+          : newDueDate[newDueDate.length - 1] == 2
+          ? 'nd'
+          : newDueDate[newDueDate.length - 1] == 3
+          ? 'rd'
+          : 'th'
+      }
+      `
+    );
   };
 
   return (

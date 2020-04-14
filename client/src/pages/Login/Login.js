@@ -5,9 +5,11 @@ import './login.css';
 
 const Login = props => {
   const [login, setLogin] = useState(true);
+  const [loginPage, setloginPage] = useState(0);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
+  const [income, setIncome] = useState('');
   const [errorMsg, setErrorMsg] = useState(false);
 
   const [loginUser] = useLazyQuery(loginQuery, {
@@ -25,14 +27,18 @@ const Login = props => {
     }
   });
 
-  const [registerUser] = useMutation(addUserMutation, {
-    onCompleted: data => {
-      props.history.push({
-        pathname: '/home',
-        state: data.addUser
-      });
-    }
-  });
+  // const [registerUser] = useMutation(addUserMutation, {
+  //   onCompleted: data => {
+  //     props.history.push({
+  //       pathname: '/home',
+  //       state: data.addUser
+  //     });
+  //   }
+  // });
+
+  const registerUser = () => {
+    setloginPage(1);
+  };
 
   return (
     <div id='login-wrapper'>
@@ -41,7 +47,7 @@ const Login = props => {
         <div id='login-subheader'>Login or Register:</div>
       </div>
       {errorMsg && <div id='login-error'>Incorrect username or password.</div>}
-      {!login && (
+      {!login && !loginPage ? (
         <input
           value={name}
           onChange={e => setName(e.target.value)}
@@ -51,25 +57,42 @@ const Login = props => {
           autoComplete='new-password'
           required
         />
+      ) : (
+        !login &&
+        loginPage && (
+          <input
+            value={income}
+            onChange={e => setIncome(e.target.value)}
+            type='number'
+            placeholder='Approximate monthly income'
+            id='income-field'
+            autoComplete='new-password'
+          />
+        )
       )}
-      <input
-        value={username}
-        onChange={e => setUsername(e.target.value)}
-        type='text'
-        placeholder='Username'
-        className='login-field'
-        autoComplete='new-password'
-        required
-      />
-      <input
-        value={password}
-        onChange={e => setPassword(e.target.value)}
-        type='password'
-        placeholder='Password'
-        className='login-field'
-        autoComplete='new-password'
-        required
-      />
+      {!loginPage && (
+        <>
+          <input
+            value={username}
+            onChange={e => setUsername(e.target.value)}
+            type='text'
+            placeholder='Username'
+            className='login-field'
+            autoComplete='new-password'
+            required
+          />
+          <input
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            type='password'
+            placeholder='Password'
+            className='login-field'
+            autoComplete='new-password'
+            required
+          />
+        </>
+      )}
+
       <button
         id='register-login-button'
         onClick={e => {
