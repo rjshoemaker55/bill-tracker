@@ -3,28 +3,27 @@ import { useLazyQuery, useMutation } from '@apollo/react-hooks';
 import { loginQuery, addUserMutation } from '../../queries/queries';
 import './login.css';
 
-const Login = props => {
+const Login = (props) => {
   const [login, setLogin] = useState(true);
-  const [loginPage, setloginPage] = useState(0);
+  const [registerPage, setRegisterPage] = useState(0);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [income, setIncome] = useState('');
-  const [errorMsg, setErrorMsg] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
 
   const [loginUser] = useLazyQuery(loginQuery, {
-    onError: err => {
-      setUsername('');
-      setPassword('');
-      setErrorMsg(true);
+    onError: (err) => {
+      resetFields();
+      setErrorMsg('Incorrect username or password!');
     },
-    onCompleted: data => {
+    onCompleted: (data) => {
       setErrorMsg(false);
       props.history.push({
         pathname: '/home',
-        state: data.loginUser
+        state: data.loginUser,
       });
-    }
+    },
   });
 
   // const [registerUser] = useMutation(addUserMutation, {
@@ -36,8 +35,40 @@ const Login = props => {
   //   }
   // });
 
+  const handleSubmitClick = () => {
+    if (login) {
+      return loginUser({
+        variables: {
+          username,
+          password,
+        },
+      });
+    } else if (!registerPage) {
+      return setRegisterPage(1);
+    } else if (name == '' || username == 0 || password == 0 || income == 0) {
+      setErrorMsg('Missing one or more fields!');
+      resetFields();
+    } else {
+      return registerUser({
+        variables: {
+          name: name,
+          username: username,
+          password: password,
+        },
+      });
+    }
+  };
+
+  const resetFields = () => {
+    setName('');
+    setUsername('');
+    setPassword('');
+    setIncome('');
+    setRegisterPage(0);
+  };
+
   const registerUser = () => {
-    setloginPage(1);
+    setRegisterPage(1);
   };
 
   return (
@@ -46,11 +77,11 @@ const Login = props => {
         <div id='login-header'>Bill Keeper.</div>
         <div id='login-subheader'>Login or Register:</div>
       </div>
-      {errorMsg && <div id='login-error'>Incorrect username or password.</div>}
-      {!login && !loginPage ? (
+      {errorMsg && <div id='login-error'>{errorMsg}</div>}
+      {!login && !registerPage ? (
         <input
           value={name}
-          onChange={e => setName(e.target.value)}
+          onChange={(e) => setName(e.target.value)}
           type='text'
           placeholder='Name'
           className='login-field'
@@ -59,31 +90,32 @@ const Login = props => {
         />
       ) : (
         !login &&
-        loginPage && (
+        registerPage && (
           <input
             value={income}
-            onChange={e => setIncome(e.target.value)}
+            onChange={(e) => setIncome(e.target.value)}
             type='number'
-            placeholder='Approximate monthly income'
-            id='income-field'
+            placeholder='Monthly income'
+            className='login-field'
             autoComplete='new-password'
           />
         )
       )}
-      {!loginPage && (
+      {!registerPage && (
         <>
           <input
             value={username}
-            onChange={e => setUsername(e.target.value)}
+            onChange={(e) => setUsername(e.target.value)}
             type='text'
             placeholder='Username'
             className='login-field'
             autoComplete='new-password'
             required
           />
+
           <input
             value={password}
-            onChange={e => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
             type='password'
             placeholder='Password'
             className='login-field'
@@ -95,26 +127,20 @@ const Login = props => {
 
       <button
         id='register-login-button'
-        onClick={e => {
-          login
-            ? loginUser({
-                variables: {
-                  username,
-                  password
-                }
-              })
-            : registerUser({
-                variables: {
-                  name: name,
-                  username: username,
-                  password: password
-                }
-              });
+        onClick={(e) => {
+          handleSubmitClick();
         }}
       >
-        {login ? 'Login' : 'Register'}
+        {login ? 'Login' : !registerPage ? '→' : 'Register'}
       </button>
-      <div id='register-login-switch' onClick={() => setLogin(!login)}>
+
+      <div
+        id='register-login-switch'
+        onClick={() => {
+          setLogin(!login);
+          resetFields();
+        }}
+      >
         {login ? 'Register' : 'Login'}
       </div>
     </div>
