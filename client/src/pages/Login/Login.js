@@ -26,14 +26,14 @@ const Login = (props) => {
     },
   });
 
-  // const [registerUser] = useMutation(addUserMutation, {
-  //   onCompleted: data => {
-  //     props.history.push({
-  //       pathname: '/home',
-  //       state: data.addUser
-  //     });
-  //   }
-  // });
+  const [registerUser] = useMutation(addUserMutation, {
+    onCompleted: (data) => {
+      props.history.push({
+        pathname: '/home',
+        state: data.addUser,
+      });
+    },
+  });
 
   const handleSubmitClick = () => {
     if (login) {
@@ -65,10 +65,6 @@ const Login = (props) => {
     setPassword('');
     setIncome('');
     setRegisterPage(0);
-  };
-
-  const registerUser = () => {
-    setRegisterPage(1);
   };
 
   return (
@@ -139,6 +135,7 @@ const Login = (props) => {
         onClick={() => {
           setLogin(!login);
           resetFields();
+          setErrorMsg('');
         }}
       >
         {login ? 'Register' : 'Login'}
